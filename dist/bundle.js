@@ -497,7 +497,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Project)
 /* harmony export */ });
-/* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tasks */ "./src/tasks.js");
+/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent");
+/* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tasks */ "./src/tasks.js");
+
 
 
 function Project(name) {
@@ -509,7 +511,7 @@ function Project(name) {
         });
     }
     const setTask = (name, description, dueDate) => {
-        let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_0__["default"])(name, description, dueDate)
+        let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_1__["default"])(name, description, dueDate)
         tasks.push(temp);
     }
     const getTasks = () => {
@@ -518,12 +520,16 @@ function Project(name) {
     const getName = () => {
         return name;
     }
+    const handleEventClick = () => {
+        _renderContent__WEBPACK_IMPORTED_MODULE_0__["default"].renderTasks(tasks);
+    }
     return {
         name,
         getName,
         getTask,
         setTask,
-        getTasks
+        getTasks,
+        handleEventClick
     }
 }
 
@@ -539,20 +545,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
+
 let renderContent = (function () {
-    let renderProject = (name) => {
+    const renderProject = (obj) => {
         let container = document.getElementById('projectsList');
 
-        let project = document.createElement('button');
-        project.innerHTML = name;
+        let projectContainer = document.createElement('button');
+        projectContainer.innerHTML = obj.getName();
+        projectContainer.addEventListener('click', () => {
+            obj.handleEventClick();
+        })
 
-        container.appendChild(project);
+        container.appendChild(projectContainer);
     }
 
-    let renderTasks = (array) => {
-        array.forEach(element => {
-            let container = document.getElementById('tasksList');
+    const renderTasks = (array) => {
+        let container = document.getElementById('tasksList');
+        container.innerHTML = '';
 
+        array.forEach(element => {
             let task = document.createElement('li');
             task.classList.add('task');
 
@@ -706,7 +718,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let test = (0,_project__WEBPACK_IMPORTED_MODULE_1__["default"])('test123');
-_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test.getName());
+_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test);
 test.setTask('taskForTest1', 'taskForTest1', 'taskForTest1');
 // test.getTask();
 let test2 = (0,_project__WEBPACK_IMPORTED_MODULE_1__["default"])('test2');
@@ -714,10 +726,10 @@ test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
 test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
 test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
 // test2.getTask();
-_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test2.getName());
+_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test2);
 
-_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderTasks(test.getTasks());
-_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderTasks(test2.getTasks());
+// renderContent.renderTasks(test.getTasks());
+// renderContent.renderTasks(test2.getTasks());
 
 })();
 

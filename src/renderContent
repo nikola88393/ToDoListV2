@@ -1,17 +1,22 @@
+import Project from "./project";
 let renderContent = (function () {
-    let renderProject = (name) => {
+    const renderProject = (obj) => {
         let container = document.getElementById('projectsList');
 
-        let project = document.createElement('button');
-        project.innerHTML = name;
+        let projectContainer = document.createElement('button');
+        projectContainer.innerHTML = obj.getName();
+        projectContainer.addEventListener('click', () => {
+            obj.handleEventClick();
+        })
 
-        container.appendChild(project);
+        container.appendChild(projectContainer);
     }
 
-    let renderTasks = (array) => {
-        array.forEach(element => {
-            let container = document.getElementById('tasksList');
+    const renderTasks = (array) => {
+        let container = document.getElementById('tasksList');
+        container.innerHTML = '';
 
+        array.forEach(element => {
             let task = document.createElement('li');
             task.classList.add('task');
 

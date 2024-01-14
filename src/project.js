@@ -1,3 +1,4 @@
+import renderContent from "./renderContent";
 import task from "./tasks";
 
 export default function Project(name) {
@@ -18,11 +19,15 @@ export default function Project(name) {
     const getName = () => {
         return name;
     }
+    const handleEventClick = () => {
+        renderContent.renderTasks(tasks);
+    }
     return {
         name,
         getName,
         getTask,
         setTask,
-        getTasks
+        getTasks,
+        handleEventClick
     }
 }
