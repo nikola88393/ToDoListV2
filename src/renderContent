@@ -1,0 +1,41 @@
+let renderContent = (function () {
+    let renderProject = (name) => {
+        let container = document.getElementById('projectsList');
+
+        let project = document.createElement('button');
+        project.innerHTML = name;
+
+        container.appendChild(project);
+    }
+
+    let renderTasks = (array) => {
+        array.forEach(element => {
+            let container = document.getElementById('tasksList');
+
+            let task = document.createElement('li');
+            task.classList.add('task');
+
+            let title = document.createElement('p');
+            title.innerHTML = element.name;
+
+            let description = document.createElement('p');
+            description.innerHTML = element.description;
+
+            let dueDate = document.createElement('p');
+            dueDate.innerHTML = element.dueDate;
+
+            task.appendChild(title);
+            task.appendChild(description);
+            task.appendChild(dueDate);
+
+            container.appendChild(task);
+        });
+    }
+
+    return {
+        renderProject,
+        renderTasks
+    }
+})();
+
+export default renderContent

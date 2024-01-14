@@ -24,7 +24,23 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `* {
     padding: 0;
     margin: 0;
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,UAAU;IACV,SAAS;AACb","sourcesContent":["* {\n    padding: 0;\n    margin: 0;\n}"],"sourceRoot":""}]);
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+.projectsContainer,
+.tasksContainer {
+    width: 100%;
+    height: 50%;
+    border: 1px solid red;
+}
+
+.task {
+    border: 1px solid red;
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,UAAU;IACV,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,aAAa;AACjB;;AAEA;;IAEI,WAAW;IACX,WAAW;IACX,qBAAqB;AACzB;;AAEA;IACI,qBAAqB;AACzB","sourcesContent":["* {\n    padding: 0;\n    margin: 0;\n}\n\nbody {\n    width: 100vw;\n    height: 100vh;\n}\n\n.projectsContainer,\n.tasksContainer {\n    width: 100%;\n    height: 50%;\n    border: 1px solid red;\n}\n\n.task {\n    border: 1px solid red;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -469,6 +485,137 @@ function styleTagTransform(css, styleElement) {
 }
 module.exports = styleTagTransform;
 
+/***/ }),
+
+/***/ "./src/project.js":
+/*!************************!*\
+  !*** ./src/project.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Project)
+/* harmony export */ });
+/* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tasks */ "./src/tasks.js");
+
+
+function Project(name) {
+    let tasks = [];
+
+    const getTask = () => {
+        tasks.forEach(element => {
+            console.log(element.getTaskName());
+        });
+    }
+    const setTask = (name, description, dueDate) => {
+        let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_0__["default"])(name, description, dueDate)
+        tasks.push(temp);
+    }
+    const getTasks = () => {
+        return tasks;
+    }
+    const getName = () => {
+        return name;
+    }
+    return {
+        name,
+        getName,
+        getTask,
+        setTask,
+        getTasks
+    }
+}
+
+/***/ }),
+
+/***/ "./src/renderContent":
+/*!***************************!*\
+  !*** ./src/renderContent ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+let renderContent = (function () {
+    let renderProject = (name) => {
+        let container = document.getElementById('projectsList');
+
+        let project = document.createElement('button');
+        project.innerHTML = name;
+
+        container.appendChild(project);
+    }
+
+    let renderTasks = (array) => {
+        array.forEach(element => {
+            let container = document.getElementById('tasksList');
+
+            let task = document.createElement('li');
+            task.classList.add('task');
+
+            let title = document.createElement('p');
+            title.innerHTML = element.name;
+
+            let description = document.createElement('p');
+            description.innerHTML = element.description;
+
+            let dueDate = document.createElement('p');
+            dueDate.innerHTML = element.dueDate;
+
+            task.appendChild(title);
+            task.appendChild(description);
+            task.appendChild(dueDate);
+
+            container.appendChild(task);
+        });
+    }
+
+    return {
+        renderProject,
+        renderTasks
+    }
+})();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (renderContent);
+
+/***/ }),
+
+/***/ "./src/tasks.js":
+/*!**********************!*\
+  !*** ./src/tasks.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ task)
+/* harmony export */ });
+function task(name, description, dueDate) {
+    let finished = false;
+
+    const getTaskName = () => {
+        return name;
+    }
+
+    const getTaskInfo = () => {
+        return {
+            name, description, dueDate
+        }
+    }
+
+    return {
+        name,
+        description,
+        dueDate,
+        finished,
+        getTaskName,
+        getTaskInfo
+    }
+}
+
 /***/ })
 
 /******/ 	});
@@ -552,8 +699,26 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
+/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent");
 
-console.log('working');
+
+
+
+let test = (0,_project__WEBPACK_IMPORTED_MODULE_1__["default"])('test123');
+_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test.getName());
+test.setTask('taskForTest1', 'taskForTest1', 'taskForTest1');
+// test.getTask();
+let test2 = (0,_project__WEBPACK_IMPORTED_MODULE_1__["default"])('test2');
+test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
+test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
+test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
+// test2.getTask();
+_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test2.getName());
+
+_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderTasks(test.getTasks());
+_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderTasks(test2.getTasks());
+
 })();
 
 /******/ })()
