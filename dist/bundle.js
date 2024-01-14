@@ -38,9 +38,12 @@ body {
     border: 1px solid red;
 }
 
-.task {
+.task,
+.project {
     border: 1px solid red;
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,UAAU;IACV,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,aAAa;AACjB;;AAEA;;IAEI,WAAW;IACX,WAAW;IACX,qBAAqB;AACzB;;AAEA;IACI,qBAAqB;AACzB","sourcesContent":["* {\n    padding: 0;\n    margin: 0;\n}\n\nbody {\n    width: 100vw;\n    height: 100vh;\n}\n\n.projectsContainer,\n.tasksContainer {\n    width: 100%;\n    height: 50%;\n    border: 1px solid red;\n}\n\n.task {\n    border: 1px solid red;\n}"],"sourceRoot":""}]);
+    margin: 10px;
+    padding: 10px
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,UAAU;IACV,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,aAAa;AACjB;;AAEA;;IAEI,WAAW;IACX,WAAW;IACX,qBAAqB;AACzB;;AAEA;;IAEI,qBAAqB;IACrB,YAAY;IACZ;AACJ","sourcesContent":["* {\n    padding: 0;\n    margin: 0;\n}\n\nbody {\n    width: 100vw;\n    height: 100vh;\n}\n\n.projectsContainer,\n.tasksContainer {\n    width: 100%;\n    height: 50%;\n    border: 1px solid red;\n}\n\n.task,\n.project {\n    border: 1px solid red;\n    margin: 10px;\n    padding: 10px\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -545,17 +548,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
 
 let renderContent = (function () {
     const renderProject = (obj) => {
         let container = document.getElementById('projectsList');
 
-        let projectContainer = document.createElement('button');
-        projectContainer.innerHTML = obj.getName();
-        projectContainer.addEventListener('click', () => {
+        let projectContainer = document.createElement('div');
+        projectContainer.classList.add('project');
+
+        let title = document.createElement('p');
+        title.innerHTML = obj.getName();
+        title.addEventListener('click', () => {
             obj.handleEventClick();
         })
+
+        let delBtn = document.createElement('button');
+        delBtn.innerHTML = 'Delete project';
+
+        projectContainer.appendChild(title)
+        projectContainer.appendChild(delBtn);
 
         container.appendChild(projectContainer);
     }
@@ -577,9 +588,24 @@ let renderContent = (function () {
             let dueDate = document.createElement('p');
             dueDate.innerHTML = element.dueDate;
 
+            let status = document.createElement('p');
+            status.innerHTML = element.finished;
+
+            let statusChange = document.createElement('button');
+            statusChange.innerHTML = 'Change status';
+
+            let delBtn = document.createElement('button');
+            delBtn.innerHTML = 'Delete Task';
+            delBtn.addEventListener('click', () => {
+
+            })
+
             task.appendChild(title);
             task.appendChild(description);
             task.appendChild(dueDate);
+            task.appendChild(status);
+            task.appendChild(statusChange);
+            task.appendChild(delBtn);
 
             container.appendChild(task);
         });
@@ -618,13 +644,18 @@ function task(name, description, dueDate) {
         }
     }
 
+    const changeStatus = () => {
+        finished = !finished;
+    }
+
     return {
         name,
         description,
         dueDate,
         finished,
         getTaskName,
-        getTaskInfo
+        getTaskInfo,
+        changeStatus
     }
 }
 
@@ -727,6 +758,10 @@ test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
 test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
 // test2.getTask();
 _renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test2);
+
+setTimeout(() => {
+    console.log(test2.getTasks());
+}, 10000)
 
 // renderContent.renderTasks(test.getTasks());
 // renderContent.renderTasks(test2.getTasks());

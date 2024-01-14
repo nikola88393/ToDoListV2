@@ -11,12 +11,17 @@ export default function task(name, description, dueDate) {
         }
     }
 
+    const changeStatus = () => {
+        finished = !finished;
+    }
+
     return {
         name,
         description,
         dueDate,
         finished,
         getTaskName,
-        getTaskInfo
+        getTaskInfo,
+        changeStatus
     }
 }
