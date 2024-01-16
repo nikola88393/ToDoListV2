@@ -39,10 +39,16 @@ let renderContent = (function () {
             dueDate.innerHTML = element.dueDate;
 
             let status = document.createElement('p');
-            status.innerHTML = element.finished;
+            status.innerHTML = (element.finished === true) ? 'finished' : 'not finished';
 
             let statusChange = document.createElement('button');
             statusChange.innerHTML = 'Change status';
+            statusChange.addEventListener('click', () => {
+                console.log(element);
+                element.changeStatus();
+                console.log(element);
+                status.innerHTML = (element.finished === true) ? 'finished' : 'not finished';
+            });
 
             let delBtn = document.createElement('button');
             delBtn.innerHTML = 'Delete Task';

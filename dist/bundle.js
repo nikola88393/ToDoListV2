@@ -500,7 +500,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Project)
 /* harmony export */ });
-/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent");
+/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
 /* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tasks */ "./src/tasks.js");
 
 
@@ -538,10 +538,10 @@ function Project(name) {
 
 /***/ }),
 
-/***/ "./src/renderContent":
-/*!***************************!*\
-  !*** ./src/renderContent ***!
-  \***************************/
+/***/ "./src/renderContent.js":
+/*!******************************!*\
+  !*** ./src/renderContent.js ***!
+  \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -589,10 +589,16 @@ let renderContent = (function () {
             dueDate.innerHTML = element.dueDate;
 
             let status = document.createElement('p');
-            status.innerHTML = element.finished;
+            status.innerHTML = (element.finished === true) ? 'finished' : 'not finished';
 
             let statusChange = document.createElement('button');
             statusChange.innerHTML = 'Change status';
+            statusChange.addEventListener('click', () => {
+                console.log(element);
+                element.changeStatus();
+                console.log(element);
+                status.innerHTML = (element.finished === true) ? 'finished' : 'not finished';
+            });
 
             let delBtn = document.createElement('button');
             delBtn.innerHTML = 'Delete Task';
@@ -631,9 +637,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ task)
 /* harmony export */ });
-function task(name, description, dueDate) {
-    let finished = false;
-
+function task(name, description, dueDate, finished = false) {
     const getTaskName = () => {
         return name;
     }
@@ -645,14 +649,15 @@ function task(name, description, dueDate) {
     }
 
     const changeStatus = () => {
+        console.log("Before change: ", finished);
         finished = !finished;
+        console.log("After change: ", finished);
     }
 
     return {
         name,
         description,
         dueDate,
-        finished,
         getTaskName,
         getTaskInfo,
         changeStatus
@@ -743,7 +748,7 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
-/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent");
+/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
 
 
 
