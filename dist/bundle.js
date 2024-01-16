@@ -508,31 +508,38 @@ __webpack_require__.r(__webpack_exports__);
 function Project(name) {
     let tasks = [];
 
-    const getTask = () => {
-        tasks.forEach(element => {
-            console.log(element.getTaskName());
-        });
-    }
     const setTask = (name, description, dueDate) => {
         let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_1__["default"])(name, description, dueDate)
         tasks.push(temp);
     }
+
     const getTasks = () => {
         return tasks;
     }
+
     const getName = () => {
         return name;
     }
-    const handleEventClick = () => {
-        _renderContent__WEBPACK_IMPORTED_MODULE_0__["default"].renderTasks(tasks);
+
+    function deleteTask(name) {
+        tasks.forEach(task => {
+            if (task.name === name) {
+                tasks = tasks.filter(task => task.name !== name);
+            }
+        })
+        refreshTasks(this);
+    }
+
+    function refreshTasks(project = this) {
+        _renderContent__WEBPACK_IMPORTED_MODULE_0__["default"].renderTasks(tasks, project);
     }
     return {
         name,
         getName,
-        getTask,
         setTask,
         getTasks,
-        handleEventClick
+        refreshTasks,
+        deleteTask
     }
 }
 
@@ -559,7 +566,7 @@ let renderContent = (function () {
         let title = document.createElement('p');
         title.innerHTML = obj.getName();
         title.addEventListener('click', () => {
-            obj.handleEventClick();
+            renderTasks(obj.getTasks(), obj);
         })
 
         let delBtn = document.createElement('button');
@@ -571,7 +578,7 @@ let renderContent = (function () {
         container.appendChild(projectContainer);
     }
 
-    const renderTasks = (array) => {
+    const renderTasks = (array, project) => {
         let container = document.getElementById('tasksList');
         container.innerHTML = '';
 
@@ -594,16 +601,14 @@ let renderContent = (function () {
             let statusChange = document.createElement('button');
             statusChange.innerHTML = 'Change status';
             statusChange.addEventListener('click', () => {
-                console.log(element);
                 element.changeStatus();
-                console.log(element);
                 status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
             });
 
             let delBtn = document.createElement('button');
             delBtn.innerHTML = 'Delete Task';
             delBtn.addEventListener('click', () => {
-
+                project.deleteTask(element.name);
             })
 
             task.appendChild(title);
@@ -761,14 +766,14 @@ test.setTask('taskForTest1', 'taskForTest1', 'taskForTest1');
 // test.getTask();
 let test2 = (0,_project__WEBPACK_IMPORTED_MODULE_1__["default"])('test2');
 test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
-test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
-test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
+test2.setTask('taskForTest22', 'taskForTest1', 'taskForTest1');
+test2.setTask('taskForTest222', 'taskForTest1', 'taskForTest1');
 // test2.getTask();
 _renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test2);
 
 setTimeout(() => {
     console.log(test2.getTasks());
-}, 10000)
+}, 5000)
 
 // renderContent.renderTasks(test.getTasks());
 // renderContent.renderTasks(test2.getTasks());

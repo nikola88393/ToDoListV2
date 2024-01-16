@@ -9,7 +9,7 @@ let renderContent = (function () {
         let title = document.createElement('p');
         title.innerHTML = obj.getName();
         title.addEventListener('click', () => {
-            obj.handleEventClick();
+            renderTasks(obj.getTasks(), obj);
         })
 
         let delBtn = document.createElement('button');
@@ -21,7 +21,7 @@ let renderContent = (function () {
         container.appendChild(projectContainer);
     }
 
-    const renderTasks = (array) => {
+    const renderTasks = (array, project) => {
         let container = document.getElementById('tasksList');
         container.innerHTML = '';
 
@@ -44,16 +44,14 @@ let renderContent = (function () {
             let statusChange = document.createElement('button');
             statusChange.innerHTML = 'Change status';
             statusChange.addEventListener('click', () => {
-                console.log(element);
                 element.changeStatus();
-                console.log(element);
                 status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
             });
 
             let delBtn = document.createElement('button');
             delBtn.innerHTML = 'Delete Task';
             delBtn.addEventListener('click', () => {
-
+                project.deleteTask(element.name);
             })
 
             task.appendChild(title);
