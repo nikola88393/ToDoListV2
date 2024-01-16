@@ -1,12 +1,14 @@
-export default function task(name, description, dueDate, finished = false) {
-    const getTaskName = () => {
-        return name;
-    }
+export default function task(name, description, dueDate) {
+    let finished = false;
 
     const getTaskInfo = () => {
         return {
             name, description, dueDate
         }
+    }
+
+    const getStatus = () => {
+        return finished;
     }
 
     const changeStatus = () => {
@@ -19,8 +21,8 @@ export default function task(name, description, dueDate, finished = false) {
         name,
         description,
         dueDate,
-        getTaskName,
         getTaskInfo,
+        getStatus,
         changeStatus
     }
 }

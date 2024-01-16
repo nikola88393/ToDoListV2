@@ -47,7 +47,7 @@ let renderContent = (function () {
                 console.log(element);
                 element.changeStatus();
                 console.log(element);
-                status.innerHTML = (element.finished === true) ? 'finished' : 'not finished';
+                status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
             });
 
             let delBtn = document.createElement('button');

@@ -597,7 +597,7 @@ let renderContent = (function () {
                 console.log(element);
                 element.changeStatus();
                 console.log(element);
-                status.innerHTML = (element.finished === true) ? 'finished' : 'not finished';
+                status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
             });
 
             let delBtn = document.createElement('button');
@@ -637,15 +637,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ task)
 /* harmony export */ });
-function task(name, description, dueDate, finished = false) {
-    const getTaskName = () => {
-        return name;
-    }
+function task(name, description, dueDate) {
+    let finished = false;
 
     const getTaskInfo = () => {
         return {
             name, description, dueDate
         }
+    }
+
+    const getStatus = () => {
+        return finished;
     }
 
     const changeStatus = () => {
@@ -658,8 +660,8 @@ function task(name, description, dueDate, finished = false) {
         name,
         description,
         dueDate,
-        getTaskName,
         getTaskInfo,
+        getStatus,
         changeStatus
     }
 }
