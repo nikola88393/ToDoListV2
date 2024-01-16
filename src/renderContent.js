@@ -1,24 +1,32 @@
+import projectManager from ".";
 
 let renderContent = (function () {
-    const renderProject = (obj) => {
+    const renderProject = (array) => {
         let container = document.getElementById('projectsList');
+        container.innerHTML = '';
 
-        let projectContainer = document.createElement('div');
-        projectContainer.classList.add('project');
+        array.forEach(element => {
+            let projectContainer = document.createElement('div');
+            projectContainer.classList.add('project');
 
-        let title = document.createElement('p');
-        title.innerHTML = obj.getName();
-        title.addEventListener('click', () => {
-            renderTasks(obj.getTasks(), obj);
+            let title = document.createElement('p');
+            title.innerHTML = element.getName();
+            title.addEventListener('click', () => {
+                renderTasks(element.getTasks(), element);
+            })
+
+            let delBtn = document.createElement('button');
+            delBtn.innerHTML = 'Delete project';
+            delBtn.addEventListener('click', () => {
+                projectManager.deleteProject(element.name);
+            })
+
+            projectContainer.appendChild(title)
+            projectContainer.appendChild(delBtn);
+
+            container.appendChild(projectContainer);
         })
 
-        let delBtn = document.createElement('button');
-        delBtn.innerHTML = 'Delete project';
-
-        projectContainer.appendChild(title)
-        projectContainer.appendChild(delBtn);
-
-        container.appendChild(projectContainer);
     }
 
     const renderTasks = (array, project) => {
@@ -39,7 +47,7 @@ let renderContent = (function () {
             dueDate.innerHTML = element.dueDate;
 
             let status = document.createElement('p');
-            status.innerHTML = (element.finished === true) ? 'finished' : 'not finished';
+            status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
 
             let statusChange = document.createElement('button');
             statusChange.innerHTML = 'Change status';

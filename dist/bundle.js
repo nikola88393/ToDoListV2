@@ -490,6 +490,104 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
+/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
+
+
+
+
+
+const projectManager = (function () {
+    let projects = [];
+
+    const getProjects = () => {
+        return projects;
+    }
+
+    const addProject = (name) => {
+        let project = (0,_project__WEBPACK_IMPORTED_MODULE_1__["default"])(name);
+        projects.push(project);
+    }
+
+    const deleteProject = (name) => {
+        projects.forEach(project => {
+            if (project.name === name) {
+                projects = projects.filter(project => project.name !== name);
+            }
+        })
+        renderProjects();
+    }
+
+    const renderProjects = () => {
+        _renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(projects);
+    }
+
+    const addProjectHandler = (name = 'test') => {
+        addProject(name);
+        renderProjects();
+    }
+
+    const addProjectButton = document.getElementById('newProjectBtn');
+    addProjectButton.addEventListener('click', () => {
+        addProjectHandler();
+    })
+
+    const createDefaultSetting = () => {
+        addProject('Default1');
+        addProject('Default2');
+        addProject('Default3');
+        renderProjects();
+        _renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(projects);
+        for (let i = 0; i < 3; i++) {
+            projects[0].setTask(`Task${i}`, `Task${i}`, `Task${i}`);
+        }
+    }
+
+    return {
+        createDefaultSetting,
+        deleteProject,
+        getProjects
+    }
+})();
+
+projectManager.createDefaultSetting();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (projectManager);
+// let test = project('test123');
+// renderContent.renderProject(test);
+// test.setTask('taskForTest1', 'taskForTest1', 'taskForTest1');
+// // test.getTask();
+// let test2 = project('test2');
+// test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
+// test2.setTask('taskForTest22', 'taskForTest1', 'taskForTest1');
+// test2.setTask('taskForTest222', 'taskForTest1', 'taskForTest1');
+// // test2.getTask();
+// renderContent.renderProject(test2);
+
+setTimeout(() => {
+    console.log(projectManager.getProjects());
+}, 5000)
+setTimeout(() => {
+    console.log(projectManager.getProjects());
+}, 10000)
+
+// // renderContent.renderTasks(test.getTasks());
+// // renderContent.renderTasks(test2.getTasks());
+
+
+/***/ }),
+
 /***/ "./src/project.js":
 /*!************************!*\
   !*** ./src/project.js ***!
@@ -555,27 +653,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ "./src/index.js");
+
 
 let renderContent = (function () {
-    const renderProject = (obj) => {
+    const renderProject = (array) => {
         let container = document.getElementById('projectsList');
+        container.innerHTML = '';
 
-        let projectContainer = document.createElement('div');
-        projectContainer.classList.add('project');
+        array.forEach(element => {
+            let projectContainer = document.createElement('div');
+            projectContainer.classList.add('project');
 
-        let title = document.createElement('p');
-        title.innerHTML = obj.getName();
-        title.addEventListener('click', () => {
-            renderTasks(obj.getTasks(), obj);
+            let title = document.createElement('p');
+            title.innerHTML = element.getName();
+            title.addEventListener('click', () => {
+                renderTasks(element.getTasks(), element);
+            })
+
+            let delBtn = document.createElement('button');
+            delBtn.innerHTML = 'Delete project';
+            delBtn.addEventListener('click', () => {
+                ___WEBPACK_IMPORTED_MODULE_0__["default"].deleteProject(element.name);
+            })
+
+            projectContainer.appendChild(title)
+            projectContainer.appendChild(delBtn);
+
+            container.appendChild(projectContainer);
         })
 
-        let delBtn = document.createElement('button');
-        delBtn.innerHTML = 'Delete project';
-
-        projectContainer.appendChild(title)
-        projectContainer.appendChild(delBtn);
-
-        container.appendChild(projectContainer);
     }
 
     const renderTasks = (array, project) => {
@@ -596,7 +703,7 @@ let renderContent = (function () {
             dueDate.innerHTML = element.dueDate;
 
             let status = document.createElement('p');
-            status.innerHTML = (element.finished === true) ? 'finished' : 'not finished';
+            status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
 
             let statusChange = document.createElement('button');
             statusChange.innerHTML = 'Change status';
@@ -746,40 +853,12 @@ function task(name, description, dueDate) {
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
-/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
-/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
-
-
-
-
-let test = (0,_project__WEBPACK_IMPORTED_MODULE_1__["default"])('test123');
-_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test);
-test.setTask('taskForTest1', 'taskForTest1', 'taskForTest1');
-// test.getTask();
-let test2 = (0,_project__WEBPACK_IMPORTED_MODULE_1__["default"])('test2');
-test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
-test2.setTask('taskForTest22', 'taskForTest1', 'taskForTest1');
-test2.setTask('taskForTest222', 'taskForTest1', 'taskForTest1');
-// test2.getTask();
-_renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(test2);
-
-setTimeout(() => {
-    console.log(test2.getTasks());
-}, 5000)
-
-// renderContent.renderTasks(test.getTasks());
-// renderContent.renderTasks(test2.getTasks());
-
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
+/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
