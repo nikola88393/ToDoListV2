@@ -1,5 +1,4 @@
 import './style.css'
-import project from './project';
 import renderContent from './renderContent';
 import Project from './project';
 
@@ -22,6 +21,7 @@ const projectManager = (function () {
             }
         })
         renderProjects();
+        renderContent.tasksAfterDeletingProject();
     }
 
     const renderProjects = () => {
@@ -43,7 +43,6 @@ const projectManager = (function () {
         addProject('Default2');
         addProject('Default3');
         renderProjects();
-        renderContent.renderProject(projects);
         for (let i = 0; i < 3; i++) {
             projects[0].setTask(`Task${i}`, `Task${i}`, `Task${i}`);
         }

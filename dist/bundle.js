@@ -501,9 +501,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
-/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
-/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
-
+/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
+/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./project */ "./src/project.js");
 
 
 
@@ -516,7 +515,7 @@ const projectManager = (function () {
     }
 
     const addProject = (name) => {
-        let project = (0,_project__WEBPACK_IMPORTED_MODULE_1__["default"])(name);
+        let project = (0,_project__WEBPACK_IMPORTED_MODULE_2__["default"])(name);
         projects.push(project);
     }
 
@@ -527,10 +526,11 @@ const projectManager = (function () {
             }
         })
         renderProjects();
+        _renderContent__WEBPACK_IMPORTED_MODULE_1__["default"].tasksAfterDeletingProject();
     }
 
     const renderProjects = () => {
-        _renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(projects);
+        _renderContent__WEBPACK_IMPORTED_MODULE_1__["default"].renderProject(projects);
     }
 
     const addProjectHandler = (name = 'test') => {
@@ -548,7 +548,6 @@ const projectManager = (function () {
         addProject('Default2');
         addProject('Default3');
         renderProjects();
-        _renderContent__WEBPACK_IMPORTED_MODULE_2__["default"].renderProject(projects);
         for (let i = 0; i < 3; i++) {
             projects[0].setTask(`Task${i}`, `Task${i}`, `Task${i}`);
         }
@@ -609,6 +608,7 @@ function Project(name) {
     const setTask = (name, description, dueDate) => {
         let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_1__["default"])(name, description, dueDate)
         tasks.push(temp);
+        // refreshTasks();
     }
 
     const getTasks = () => {
@@ -686,52 +686,87 @@ let renderContent = (function () {
     }
 
     const renderTasks = (array, project) => {
-        let container = document.getElementById('tasksList');
+
+        let container = document.getElementById('tasksContainer');
         container.innerHTML = '';
 
-        array.forEach(element => {
-            let task = document.createElement('li');
-            task.classList.add('task');
+        let newTaskBtn = document.createElement('button');
+        newTaskBtn.id = `newTaskFor${project.name}`;
+        newTaskBtn.innerHTML = `Add new task for ${project.name}`;
+        newTaskBtn.addEventListener('click', () => {
+            project.setTask('task', 'set by', 'new task btn');
+            project.refreshTasks();
+        })
 
-            let title = document.createElement('p');
-            title.innerHTML = element.name;
+        container.appendChild(newTaskBtn);
 
-            let description = document.createElement('p');
-            description.innerHTML = element.description;
+        let tasksContainer = document.createElement('ul');
+        tasksContainer.id = 'tasksList';
 
-            let dueDate = document.createElement('p');
-            dueDate.innerHTML = element.dueDate;
+        if (array.length != 0) {
+            array.forEach(element => {
+                let task = document.createElement('li');
+                task.classList.add('task');
 
-            let status = document.createElement('p');
-            status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+                let title = document.createElement('p');
+                title.innerHTML = element.name;
 
-            let statusChange = document.createElement('button');
-            statusChange.innerHTML = 'Change status';
-            statusChange.addEventListener('click', () => {
-                element.changeStatus();
+                let description = document.createElement('p');
+                description.innerHTML = element.description;
+
+                let dueDate = document.createElement('p');
+                dueDate.innerHTML = element.dueDate;
+
+                let status = document.createElement('p');
                 status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+
+                let statusChange = document.createElement('button');
+                statusChange.innerHTML = 'Change status';
+                statusChange.addEventListener('click', () => {
+                    element.changeStatus();
+                    status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+                });
+
+                let delBtn = document.createElement('button');
+                delBtn.innerHTML = 'Delete Task';
+                delBtn.addEventListener('click', () => {
+                    project.deleteTask(element.name);
+                })
+
+                task.appendChild(title);
+                task.appendChild(description);
+                task.appendChild(dueDate);
+                task.appendChild(status);
+                task.appendChild(statusChange);
+                task.appendChild(delBtn);
+
+                tasksContainer.appendChild(task);
             });
 
-            let delBtn = document.createElement('button');
-            delBtn.innerHTML = 'Delete Task';
-            delBtn.addEventListener('click', () => {
-                project.deleteTask(element.name);
-            })
+        }
+        else {
+            let p = document.createElement('p');
+            p.innerHTML = 'No tasks found. Click "Add new task".';
 
-            task.appendChild(title);
-            task.appendChild(description);
-            task.appendChild(dueDate);
-            task.appendChild(status);
-            task.appendChild(statusChange);
-            task.appendChild(delBtn);
+            tasksContainer.appendChild(p);
+        }
+        container.appendChild(tasksContainer);
+    }
 
-            container.appendChild(task);
-        });
+    const tasksAfterDeletingProject = () => {
+        let container = document.getElementById('tasksContainer');
+        container.innerHTML = '';
+
+        let p = document.createElement('p');
+        p.innerHTML = "Project deleted. Select another to make changes or view tasks.";
+
+        container.appendChild(p);
     }
 
     return {
         renderProject,
-        renderTasks
+        renderTasks,
+        tasksAfterDeletingProject
     }
 })();
 

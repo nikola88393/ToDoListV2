@@ -30,52 +30,87 @@ let renderContent = (function () {
     }
 
     const renderTasks = (array, project) => {
-        let container = document.getElementById('tasksList');
+
+        let container = document.getElementById('tasksContainer');
         container.innerHTML = '';
 
-        array.forEach(element => {
-            let task = document.createElement('li');
-            task.classList.add('task');
+        let newTaskBtn = document.createElement('button');
+        newTaskBtn.id = `newTaskFor${project.name}`;
+        newTaskBtn.innerHTML = `Add new task for ${project.name}`;
+        newTaskBtn.addEventListener('click', () => {
+            project.setTask('task', 'set by', 'new task btn');
+            project.refreshTasks();
+        })
 
-            let title = document.createElement('p');
-            title.innerHTML = element.name;
+        container.appendChild(newTaskBtn);
 
-            let description = document.createElement('p');
-            description.innerHTML = element.description;
+        let tasksContainer = document.createElement('ul');
+        tasksContainer.id = 'tasksList';
 
-            let dueDate = document.createElement('p');
-            dueDate.innerHTML = element.dueDate;
+        if (array.length != 0) {
+            array.forEach(element => {
+                let task = document.createElement('li');
+                task.classList.add('task');
 
-            let status = document.createElement('p');
-            status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+                let title = document.createElement('p');
+                title.innerHTML = element.name;
 
-            let statusChange = document.createElement('button');
-            statusChange.innerHTML = 'Change status';
-            statusChange.addEventListener('click', () => {
-                element.changeStatus();
+                let description = document.createElement('p');
+                description.innerHTML = element.description;
+
+                let dueDate = document.createElement('p');
+                dueDate.innerHTML = element.dueDate;
+
+                let status = document.createElement('p');
                 status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+
+                let statusChange = document.createElement('button');
+                statusChange.innerHTML = 'Change status';
+                statusChange.addEventListener('click', () => {
+                    element.changeStatus();
+                    status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+                });
+
+                let delBtn = document.createElement('button');
+                delBtn.innerHTML = 'Delete Task';
+                delBtn.addEventListener('click', () => {
+                    project.deleteTask(element.name);
+                })
+
+                task.appendChild(title);
+                task.appendChild(description);
+                task.appendChild(dueDate);
+                task.appendChild(status);
+                task.appendChild(statusChange);
+                task.appendChild(delBtn);
+
+                tasksContainer.appendChild(task);
             });
 
-            let delBtn = document.createElement('button');
-            delBtn.innerHTML = 'Delete Task';
-            delBtn.addEventListener('click', () => {
-                project.deleteTask(element.name);
-            })
+        }
+        else {
+            let p = document.createElement('p');
+            p.innerHTML = 'No tasks found. Click "Add new task".';
 
-            task.appendChild(title);
-            task.appendChild(description);
-            task.appendChild(dueDate);
-            task.appendChild(status);
-            task.appendChild(statusChange);
-            task.appendChild(delBtn);
+            tasksContainer.appendChild(p);
+        }
+        container.appendChild(tasksContainer);
+    }
 
-            container.appendChild(task);
-        });
+    const tasksAfterDeletingProject = () => {
+        let container = document.getElementById('tasksContainer');
+        container.innerHTML = '';
+
+        let p = document.createElement('p');
+        p.innerHTML = "Project deleted. Select another to make changes or view tasks.";
+
+        container.appendChild(p);
     }
 
     return {
         renderProject,
-        renderTasks
+        renderTasks,
+        tasksAfterDeletingProject
     }
 })();
 
