@@ -503,6 +503,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
 /* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./project */ "./src/project.js");
+/* harmony import */ var _localStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./localStorage */ "./src/localStorage.js");
+
+
 
 
 
@@ -514,9 +517,20 @@ const projectManager = (function () {
         return projects;
     }
 
+    const checkLocalStorage = () => {
+        if ((0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.loadProjects)()) {
+            let obj = (0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.loadProjects)();
+            for (const property in obj) {
+                addProject(obj[property]['name']);
+            }
+            renderProjects();
+        }
+    }
+
     const addProject = (name) => {
         let project = (0,_project__WEBPACK_IMPORTED_MODULE_2__["default"])(name);
         projects.push(project);
+        (0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(projects);
     }
 
     const deleteProject = (name) => {
@@ -525,6 +539,7 @@ const projectManager = (function () {
                 projects = projects.filter(project => project.name !== name);
             }
         })
+        ;(0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(projects);
         renderProjects();
         _renderContent__WEBPACK_IMPORTED_MODULE_1__["default"].tasksAfterDeletingProject(name);
     }
@@ -543,24 +558,30 @@ const projectManager = (function () {
         addProjectHandler();
     })
 
+    //doesn't work as intended
     const createDefaultSetting = () => {
-        addProject('Default1');
-        addProject('Default2');
-        addProject('Default3');
-        renderProjects();
-        for (let i = 0; i < 3; i++) {
-            projects[0].setTask(`Task${i}`, `Task${i}`, `Task${i}`);
-        }
+        // addProject('Default1');
+        // addProject('Default2');
+        // addProject('Default3');
+        // saveProjects(projects);
+        checkLocalStorage();
+        // renderProjects();
+        // for (let i = 0; i < 3; i++) {
+        //     projects[0].setTask(`Task${i}`, `Task${i}`, `Task${i}`);
+        // }
     }
 
     return {
         createDefaultSetting,
         deleteProject,
-        getProjects
+        getProjects,
+        checkLocalStorage
     }
 })();
-
+// projectManager.checkLocalStorage()
 projectManager.createDefaultSetting();
+// clearStorage()
+console.log(projectManager.getProjects());
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (projectManager);
 
@@ -572,6 +593,46 @@ setTimeout(() => {
     console.log(projectManager.getProjects());
 }, 10000)
 
+
+/***/ }),
+
+/***/ "./src/localStorage.js":
+/*!*****************************!*\
+  !*** ./src/localStorage.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   clearStorage: () => (/* binding */ clearStorage),
+/* harmony export */   loadProjects: () => (/* binding */ loadProjects),
+/* harmony export */   loadTasks: () => (/* binding */ loadTasks),
+/* harmony export */   saveProjects: () => (/* binding */ saveProjects),
+/* harmony export */   saveTasks: () => (/* binding */ saveTasks)
+/* harmony export */ });
+function saveTasks(tasksArray) {
+    if (tasksArray !== null) {
+        localStorage.setItem('tasks', JSON.stringify(tasksArray));
+    }
+}
+
+function loadTasks() {
+    return JSON.parse(localStorage.getItem('tasks'));
+}
+
+function saveProjects(projectsArray) {
+    if (projectsArray !== null) {
+        localStorage.setItem('projects', JSON.stringify(projectsArray));
+    }
+}
+
+function loadProjects() {
+    return JSON.parse(localStorage.getItem('projects'));
+}
+
+function clearStorage() {
+    localStorage.clear();
+}
 
 /***/ }),
 
@@ -587,6 +648,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
 /* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tasks */ "./src/tasks.js");
+/* harmony import */ var _localStorage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./localStorage */ "./src/localStorage.js");
+
 
 
 
@@ -596,6 +659,7 @@ function Project(name) {
     const setTask = (name, description, dueDate) => {
         let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_1__["default"])(name, description, dueDate)
         tasks.push(temp);
+        (0,_localStorage__WEBPACK_IMPORTED_MODULE_2__.saveTasks)(tasks);
     }
 
     const getTasks = () => {
@@ -612,6 +676,7 @@ function Project(name) {
                 tasks = tasks.filter(task => task.name !== name);
             }
         })
+        ;(0,_localStorage__WEBPACK_IMPORTED_MODULE_2__.saveTasks)(tasks);
         refreshTasks(this);
     }
 
@@ -653,7 +718,7 @@ let renderContent = (function () {
             projectContainer.classList.add('project');
 
             let title = document.createElement('p');
-            title.innerHTML = element.getName();
+            title.innerHTML = element.name;
             title.addEventListener('click', () => {
                 renderTasks(element.getTasks(), element);
             })

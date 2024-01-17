@@ -10,7 +10,7 @@ let renderContent = (function () {
             projectContainer.classList.add('project');
 
             let title = document.createElement('p');
-            title.innerHTML = element.getName();
+            title.innerHTML = element.name;
             title.addEventListener('click', () => {
                 renderTasks(element.getTasks(), element);
             })

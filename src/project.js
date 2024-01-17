@@ -1,5 +1,6 @@
 import renderContent from "./renderContent";
 import task from "./tasks";
+import { saveTasks, saveProjects, loadProjects, loadTasks, clearStorage } from "./localStorage";
 
 export default function Project(name) {
     let tasks = [];
@@ -7,6 +8,7 @@ export default function Project(name) {
     const setTask = (name, description, dueDate) => {
         let temp = task(name, description, dueDate)
         tasks.push(temp);
+        saveTasks(tasks);
     }
 
     const getTasks = () => {
@@ -23,6 +25,7 @@ export default function Project(name) {
                 tasks = tasks.filter(task => task.name !== name);
             }
         })
+        saveTasks(tasks);
         refreshTasks(this);
     }
 
