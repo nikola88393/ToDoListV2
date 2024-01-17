@@ -7,7 +7,6 @@ export default function Project(name) {
     const setTask = (name, description, dueDate) => {
         let temp = task(name, description, dueDate)
         tasks.push(temp);
-        // refreshTasks();
     }
 
     const getTasks = () => {

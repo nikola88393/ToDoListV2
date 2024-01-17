@@ -88,21 +88,23 @@ let renderContent = (function () {
             });
 
         }
+
         else {
             let p = document.createElement('p');
             p.innerHTML = 'No tasks found. Click "Add new task".';
 
             tasksContainer.appendChild(p);
         }
+
         container.appendChild(tasksContainer);
     }
 
-    const tasksAfterDeletingProject = () => {
+    const tasksAfterDeletingProject = (name) => {
         let container = document.getElementById('tasksContainer');
         container.innerHTML = '';
 
         let p = document.createElement('p');
-        p.innerHTML = "Project deleted. Select another to make changes or view tasks.";
+        p.innerHTML = `Project ${name} deleted. Select another to make changes or view tasks.`;
 
         container.appendChild(p);
     }

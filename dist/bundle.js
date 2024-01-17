@@ -526,7 +526,7 @@ const projectManager = (function () {
             }
         })
         renderProjects();
-        _renderContent__WEBPACK_IMPORTED_MODULE_1__["default"].tasksAfterDeletingProject();
+        _renderContent__WEBPACK_IMPORTED_MODULE_1__["default"].tasksAfterDeletingProject(name);
     }
 
     const renderProjects = () => {
@@ -563,16 +563,7 @@ const projectManager = (function () {
 projectManager.createDefaultSetting();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (projectManager);
-// let test = project('test123');
-// renderContent.renderProject(test);
-// test.setTask('taskForTest1', 'taskForTest1', 'taskForTest1');
-// // test.getTask();
-// let test2 = project('test2');
-// test2.setTask('taskForTest2', 'taskForTest1', 'taskForTest1');
-// test2.setTask('taskForTest22', 'taskForTest1', 'taskForTest1');
-// test2.setTask('taskForTest222', 'taskForTest1', 'taskForTest1');
-// // test2.getTask();
-// renderContent.renderProject(test2);
+
 
 setTimeout(() => {
     console.log(projectManager.getProjects());
@@ -580,9 +571,6 @@ setTimeout(() => {
 setTimeout(() => {
     console.log(projectManager.getProjects());
 }, 10000)
-
-// // renderContent.renderTasks(test.getTasks());
-// // renderContent.renderTasks(test2.getTasks());
 
 
 /***/ }),
@@ -608,7 +596,6 @@ function Project(name) {
     const setTask = (name, description, dueDate) => {
         let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_1__["default"])(name, description, dueDate)
         tasks.push(temp);
-        // refreshTasks();
     }
 
     const getTasks = () => {
@@ -744,21 +731,23 @@ let renderContent = (function () {
             });
 
         }
+
         else {
             let p = document.createElement('p');
             p.innerHTML = 'No tasks found. Click "Add new task".';
 
             tasksContainer.appendChild(p);
         }
+
         container.appendChild(tasksContainer);
     }
 
-    const tasksAfterDeletingProject = () => {
+    const tasksAfterDeletingProject = (name) => {
         let container = document.getElementById('tasksContainer');
         container.innerHTML = '';
 
         let p = document.createElement('p');
-        p.innerHTML = "Project deleted. Select another to make changes or view tasks.";
+        p.innerHTML = `Project ${name} deleted. Select another to make changes or view tasks.`;
 
         container.appendChild(p);
     }
