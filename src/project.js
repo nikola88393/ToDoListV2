@@ -1,13 +1,13 @@
 import projectManager from ".";
 import renderContent from "./renderContent";
 import task from "./tasks";
-import { saveTasks, saveProjects, loadProjects, loadTasks, clearStorage } from "./localStorage";
+import { saveProjects } from "./localStorage";
 
 export default function Project(name) {
     let tasks = [];
 
-    const setTask = (name, description, dueDate, projectName = this) => {
-        let temp = task(name, description, dueDate, projectName);
+    const setTask = (name, description, dueDate, finished) => {
+        let temp = task(name, description, dueDate, finished);
         tasks.push(temp);
         // console.log(temp);
 
@@ -30,7 +30,7 @@ export default function Project(name) {
             }
         })
 
-        saveProjects(projectManager.getProjects());
+        // saveProjects(projectManager.getProjects());
         refreshTasks(this);
     }
 

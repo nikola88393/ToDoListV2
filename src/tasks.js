@@ -1,4 +1,6 @@
-export default function task(name, description, dueDate, projectName, finished = false) {
+import projectManager from ".";
+
+export default function task(name, description, dueDate, finished = false) {
     // let finished = false;
     const getTaskInfo = () => {
         return {
@@ -14,13 +16,13 @@ export default function task(name, description, dueDate, projectName, finished =
         console.log("Before change: ", finished);
         finished = !finished;
         console.log("After change: ", finished);
+
     }
 
     return {
         name,
         description,
         dueDate,
-        projectName,
         finished,
         getTaskInfo,
         getStatus,

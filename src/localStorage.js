@@ -1,12 +1,12 @@
-export function saveTasks(tasksArray) {
-    if (tasksArray !== null) {
-        localStorage.setItem('tasks', JSON.stringify(tasksArray));
-    }
-}
+// export function saveTasks(tasksArray) {
+//     if (tasksArray !== null) {
+//         localStorage.setItem('tasks', JSON.stringify(tasksArray));
+//     }
+// }
 
-export function loadTasks() {
-    return JSON.parse(localStorage.getItem('tasks'));
-}
+// export function loadTasks() {
+//     return JSON.parse(localStorage.getItem('tasks'));
+// }
 
 export function saveProjects(projectsArray) {
     if (projectsArray !== null) {
@@ -20,4 +20,10 @@ export function loadProjects() {
 
 export function clearStorage() {
     localStorage.clear();
+    location.reload();
 }
+
+//For testing
+const clearStorageBtn = document.getElementById('clearStorage');
+
+clearStorageBtn.addEventListener('click', clearStorage);

@@ -1,7 +1,7 @@
 import './style.css'
 import renderContent from './renderContent';
 import Project from './project';
-import { saveTasks, saveProjects, loadProjects, loadTasks, clearStorage } from "./localStorage";
+import { saveProjects, loadProjects } from "./localStorage";
 
 
 const projectManager = (function () {
@@ -16,7 +16,7 @@ const projectManager = (function () {
 
         if (tasks !== undefined && tasks.length > 0) {
             tasks.forEach(element => {
-                project.setTask(element['name'], element['description'], element['dueDate']);
+                project.setTask(element['name'], element['description'], element['dueDate'], element['finished']);
             })
         }
 
@@ -54,6 +54,22 @@ const projectManager = (function () {
         projects.forEach(element => {
             if (element.name === project.name) {
                 element.tasks = element.tasks.filter(task => task.name !== name);
+                saveProjects(projects);
+            }
+
+        })
+    }
+
+    const changeTaskStatus = (project, name) => {
+        projects.forEach(element => {
+            if (element.name === project.name) {
+                element.tasks.forEach(entry => {
+                    if (entry.name === name) {
+                        entry.changeStatus();
+                        entry.finished = (entry.finished === false) ? true : false;
+                        saveProjects(projects);
+                    }
+                })
             }
         })
     }
@@ -91,7 +107,8 @@ const projectManager = (function () {
         deleteProject,
         deleteTask,
         getProjects,
-        checkLocalStorage
+        checkLocalStorage,
+        changeTaskStatus
     }
 })();
 
@@ -103,10 +120,7 @@ projectManager.checkLocalStorage()
 console.log(projectManager.getProjects());
 
 
-//For testing
-const clearStorageBtn = document.getElementById('clearStorage');
 
-clearStorageBtn.addEventListener('click', clearStorage)
 //For testing
 
 

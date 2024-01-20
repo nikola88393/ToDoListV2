@@ -522,7 +522,7 @@ const projectManager = (function () {
 
         if (tasks !== undefined && tasks.length > 0) {
             tasks.forEach(element => {
-                project.setTask(element['name'], element['description'], element['dueDate']);
+                project.setTask(element['name'], element['description'], element['dueDate'], element['finished']);
             })
         }
 
@@ -560,6 +560,22 @@ const projectManager = (function () {
         projects.forEach(element => {
             if (element.name === project.name) {
                 element.tasks = element.tasks.filter(task => task.name !== name);
+                (0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(projects);
+            }
+
+        })
+    }
+
+    const changeTaskStatus = (project, name) => {
+        projects.forEach(element => {
+            if (element.name === project.name) {
+                element.tasks.forEach(entry => {
+                    if (entry.name === name) {
+                        entry.changeStatus();
+                        entry.finished = (entry.finished === false) ? true : false;
+                        (0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(projects);
+                    }
+                })
             }
         })
     }
@@ -597,7 +613,8 @@ const projectManager = (function () {
         deleteProject,
         deleteTask,
         getProjects,
-        checkLocalStorage
+        checkLocalStorage,
+        changeTaskStatus
     }
 })();
 
@@ -609,10 +626,7 @@ projectManager.checkLocalStorage()
 console.log(projectManager.getProjects());
 
 
-//For testing
-const clearStorageBtn = document.getElementById('clearStorage');
 
-clearStorageBtn.addEventListener('click', _localStorage__WEBPACK_IMPORTED_MODULE_3__.clearStorage)
 //For testing
 
 
@@ -636,19 +650,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   clearStorage: () => (/* binding */ clearStorage),
 /* harmony export */   loadProjects: () => (/* binding */ loadProjects),
-/* harmony export */   loadTasks: () => (/* binding */ loadTasks),
-/* harmony export */   saveProjects: () => (/* binding */ saveProjects),
-/* harmony export */   saveTasks: () => (/* binding */ saveTasks)
+/* harmony export */   saveProjects: () => (/* binding */ saveProjects)
 /* harmony export */ });
-function saveTasks(tasksArray) {
-    if (tasksArray !== null) {
-        localStorage.setItem('tasks', JSON.stringify(tasksArray));
-    }
-}
+// export function saveTasks(tasksArray) {
+//     if (tasksArray !== null) {
+//         localStorage.setItem('tasks', JSON.stringify(tasksArray));
+//     }
+// }
 
-function loadTasks() {
-    return JSON.parse(localStorage.getItem('tasks'));
-}
+// export function loadTasks() {
+//     return JSON.parse(localStorage.getItem('tasks'));
+// }
 
 function saveProjects(projectsArray) {
     if (projectsArray !== null) {
@@ -662,7 +674,13 @@ function loadProjects() {
 
 function clearStorage() {
     localStorage.clear();
+    location.reload();
 }
+
+//For testing
+const clearStorageBtn = document.getElementById('clearStorage');
+
+clearStorageBtn.addEventListener('click', clearStorage);
 
 /***/ }),
 
@@ -688,8 +706,8 @@ __webpack_require__.r(__webpack_exports__);
 function Project(name) {
     let tasks = [];
 
-    const setTask = (name, description, dueDate, projectName = this) => {
-        let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_2__["default"])(name, description, dueDate, projectName);
+    const setTask = (name, description, dueDate, finished) => {
+        let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_2__["default"])(name, description, dueDate, finished);
         tasks.push(temp);
         // console.log(temp);
 
@@ -712,7 +730,7 @@ function Project(name) {
             }
         })
 
-        ;(0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(___WEBPACK_IMPORTED_MODULE_0__["default"].getProjects());
+        // saveProjects(projectManager.getProjects());
         refreshTasks(this);
     }
 
@@ -783,7 +801,7 @@ let renderContent = (function () {
         newTaskBtn.id = `newTaskFor${project.name}`;
         newTaskBtn.innerHTML = `Add new task for ${project.name}`;
         newTaskBtn.addEventListener('click', () => {
-            project.setTask('task', 'set by', 'new task btn');
+            project.setTask('task' + Math.floor(Math.random() * 100), 'set by', 'new task btn');
             project.refreshTasks();
         })
 
@@ -812,7 +830,8 @@ let renderContent = (function () {
                 let statusChange = document.createElement('button');
                 statusChange.innerHTML = 'Change status';
                 statusChange.addEventListener('click', () => {
-                    element.changeStatus();
+                    // element.changeStatus();
+                    ___WEBPACK_IMPORTED_MODULE_0__["default"].changeTaskStatus(project, element.name);
                     status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
                 });
 
@@ -876,7 +895,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ task)
 /* harmony export */ });
-function task(name, description, dueDate, projectName, finished = false) {
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ "./src/index.js");
+
+
+function task(name, description, dueDate, finished = false) {
     // let finished = false;
     const getTaskInfo = () => {
         return {
@@ -892,13 +914,13 @@ function task(name, description, dueDate, projectName, finished = false) {
         console.log("Before change: ", finished);
         finished = !finished;
         console.log("After change: ", finished);
+
     }
 
     return {
         name,
         description,
         dueDate,
-        projectName,
         finished,
         getTaskInfo,
         getStatus,

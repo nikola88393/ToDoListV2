@@ -38,7 +38,7 @@ let renderContent = (function () {
         newTaskBtn.id = `newTaskFor${project.name}`;
         newTaskBtn.innerHTML = `Add new task for ${project.name}`;
         newTaskBtn.addEventListener('click', () => {
-            project.setTask('task', 'set by', 'new task btn');
+            project.setTask('task' + Math.floor(Math.random() * 100), 'set by', 'new task btn');
             project.refreshTasks();
         })
 
@@ -67,7 +67,8 @@ let renderContent = (function () {
                 let statusChange = document.createElement('button');
                 statusChange.innerHTML = 'Change status';
                 statusChange.addEventListener('click', () => {
-                    element.changeStatus();
+                    // element.changeStatus();
+                    projectManager.changeTaskStatus(project, element.name);
                     status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
                 });
 
