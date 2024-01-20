@@ -11,20 +11,31 @@ const projectManager = (function () {
         return projects;
     }
 
+    const addProject = (name, tasks) => {
+        let project = Project(name);
+
+        if (tasks !== undefined && tasks.length > 0) {
+            tasks.forEach(element => {
+                project.setTask(element['name'], element['description'], element['dueDate']);
+            })
+        }
+
+        projects.push(project);
+
+        saveProjects(projects);
+        renderProjects();
+    }
+
     const checkLocalStorage = () => {
         if (loadProjects()) {
             let obj = loadProjects();
+
             for (const property in obj) {
-                addProject(obj[property]['name']);
+                addProject(obj[property]['name'], obj[property]['tasks']);
             }
+
             renderProjects();
         }
-    }
-
-    const addProject = (name) => {
-        let project = Project(name);
-        projects.push(project);
-        saveProjects(projects);
     }
 
     const deleteProject = (name) => {
@@ -33,16 +44,25 @@ const projectManager = (function () {
                 projects = projects.filter(project => project.name !== name);
             }
         })
+
         saveProjects(projects);
         renderProjects();
         renderContent.tasksAfterDeletingProject(name);
+    }
+
+    const deleteTask = (name, project) => {
+        projects.forEach(element => {
+            if (element.name === project.name) {
+                element.tasks = element.tasks.filter(task => task.name !== name);
+            }
+        })
     }
 
     const renderProjects = () => {
         renderContent.renderProject(projects);
     }
 
-    const addProjectHandler = (name = 'test') => {
+    const addProjectHandler = (name = `test${Math.floor(Math.random() * 100)}`) => {
         addProject(name);
         renderProjects();
     }
@@ -54,11 +74,12 @@ const projectManager = (function () {
 
     //doesn't work as intended
     const createDefaultSetting = () => {
-        // addProject('Default1');
-        // addProject('Default2');
+        // checkLocalStorage();
+        addProject('Default1');
+        addProject('Default2');
         // addProject('Default3');
         // saveProjects(projects);
-        checkLocalStorage();
+        // checkLocalStorage();
         // renderProjects();
         // for (let i = 0; i < 3; i++) {
         //     projects[0].setTask(`Task${i}`, `Task${i}`, `Task${i}`);
@@ -68,21 +89,30 @@ const projectManager = (function () {
     return {
         createDefaultSetting,
         deleteProject,
+        deleteTask,
         getProjects,
         checkLocalStorage
     }
 })();
-// projectManager.checkLocalStorage()
-projectManager.createDefaultSetting();
-// clearStorage()
-console.log(projectManager.getProjects());
 
 export default projectManager
 
+projectManager.checkLocalStorage()
+// projectManager.createDefaultSetting();
+// clearStorage()
+console.log(projectManager.getProjects());
 
-setTimeout(() => {
-    console.log(projectManager.getProjects());
-}, 5000)
-setTimeout(() => {
-    console.log(projectManager.getProjects());
-}, 10000)
+
+//For testing
+const clearStorageBtn = document.getElementById('clearStorage');
+
+clearStorageBtn.addEventListener('click', clearStorage)
+//For testing
+
+
+// setTimeout(() => {
+//     console.log(projectManager.getProjects());
+// }, 5000)
+// setTimeout(() => {
+//     console.log(projectManager.getProjects());
+// }, 10000)

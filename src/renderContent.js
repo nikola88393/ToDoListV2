@@ -75,6 +75,7 @@ let renderContent = (function () {
                 delBtn.innerHTML = 'Delete Task';
                 delBtn.addEventListener('click', () => {
                     project.deleteTask(element.name);
+
                 })
 
                 task.appendChild(title);

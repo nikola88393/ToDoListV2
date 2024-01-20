@@ -1,6 +1,5 @@
-export default function task(name, description, dueDate) {
-    let finished = false;
-
+export default function task(name, description, dueDate, projectName, finished = false) {
+    // let finished = false;
     const getTaskInfo = () => {
         return {
             name, description, dueDate
@@ -21,6 +20,8 @@ export default function task(name, description, dueDate) {
         name,
         description,
         dueDate,
+        projectName,
+        finished,
         getTaskInfo,
         getStatus,
         changeStatus

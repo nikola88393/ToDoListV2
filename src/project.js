@@ -1,3 +1,4 @@
+import projectManager from ".";
 import renderContent from "./renderContent";
 import task from "./tasks";
 import { saveTasks, saveProjects, loadProjects, loadTasks, clearStorage } from "./localStorage";
@@ -5,10 +6,12 @@ import { saveTasks, saveProjects, loadProjects, loadTasks, clearStorage } from "
 export default function Project(name) {
     let tasks = [];
 
-    const setTask = (name, description, dueDate) => {
-        let temp = task(name, description, dueDate)
+    const setTask = (name, description, dueDate, projectName = this) => {
+        let temp = task(name, description, dueDate, projectName);
         tasks.push(temp);
-        saveTasks(tasks);
+        // console.log(temp);
+
+        saveProjects(projectManager.getProjects());
     }
 
     const getTasks = () => {
@@ -23,9 +26,11 @@ export default function Project(name) {
         tasks.forEach(task => {
             if (task.name === name) {
                 tasks = tasks.filter(task => task.name !== name);
+                projectManager.deleteTask(name, this);
             }
         })
-        saveTasks(tasks);
+
+        saveProjects(projectManager.getProjects());
         refreshTasks(this);
     }
 
@@ -34,6 +39,7 @@ export default function Project(name) {
     }
     return {
         name,
+        tasks,
         getName,
         setTask,
         getTasks,

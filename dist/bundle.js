@@ -517,20 +517,31 @@ const projectManager = (function () {
         return projects;
     }
 
+    const addProject = (name, tasks) => {
+        let project = (0,_project__WEBPACK_IMPORTED_MODULE_2__["default"])(name);
+
+        if (tasks !== undefined && tasks.length > 0) {
+            tasks.forEach(element => {
+                project.setTask(element['name'], element['description'], element['dueDate']);
+            })
+        }
+
+        projects.push(project);
+
+        (0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(projects);
+        renderProjects();
+    }
+
     const checkLocalStorage = () => {
         if ((0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.loadProjects)()) {
             let obj = (0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.loadProjects)();
+
             for (const property in obj) {
-                addProject(obj[property]['name']);
+                addProject(obj[property]['name'], obj[property]['tasks']);
             }
+
             renderProjects();
         }
-    }
-
-    const addProject = (name) => {
-        let project = (0,_project__WEBPACK_IMPORTED_MODULE_2__["default"])(name);
-        projects.push(project);
-        (0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(projects);
     }
 
     const deleteProject = (name) => {
@@ -539,16 +550,25 @@ const projectManager = (function () {
                 projects = projects.filter(project => project.name !== name);
             }
         })
+
         ;(0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(projects);
         renderProjects();
         _renderContent__WEBPACK_IMPORTED_MODULE_1__["default"].tasksAfterDeletingProject(name);
+    }
+
+    const deleteTask = (name, project) => {
+        projects.forEach(element => {
+            if (element.name === project.name) {
+                element.tasks = element.tasks.filter(task => task.name !== name);
+            }
+        })
     }
 
     const renderProjects = () => {
         _renderContent__WEBPACK_IMPORTED_MODULE_1__["default"].renderProject(projects);
     }
 
-    const addProjectHandler = (name = 'test') => {
+    const addProjectHandler = (name = `test${Math.floor(Math.random() * 100)}`) => {
         addProject(name);
         renderProjects();
     }
@@ -560,11 +580,12 @@ const projectManager = (function () {
 
     //doesn't work as intended
     const createDefaultSetting = () => {
-        // addProject('Default1');
-        // addProject('Default2');
+        // checkLocalStorage();
+        addProject('Default1');
+        addProject('Default2');
         // addProject('Default3');
         // saveProjects(projects);
-        checkLocalStorage();
+        // checkLocalStorage();
         // renderProjects();
         // for (let i = 0; i < 3; i++) {
         //     projects[0].setTask(`Task${i}`, `Task${i}`, `Task${i}`);
@@ -574,24 +595,33 @@ const projectManager = (function () {
     return {
         createDefaultSetting,
         deleteProject,
+        deleteTask,
         getProjects,
         checkLocalStorage
     }
 })();
-// projectManager.checkLocalStorage()
-projectManager.createDefaultSetting();
-// clearStorage()
-console.log(projectManager.getProjects());
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (projectManager);
 
+projectManager.checkLocalStorage()
+// projectManager.createDefaultSetting();
+// clearStorage()
+console.log(projectManager.getProjects());
 
-setTimeout(() => {
-    console.log(projectManager.getProjects());
-}, 5000)
-setTimeout(() => {
-    console.log(projectManager.getProjects());
-}, 10000)
+
+//For testing
+const clearStorageBtn = document.getElementById('clearStorage');
+
+clearStorageBtn.addEventListener('click', _localStorage__WEBPACK_IMPORTED_MODULE_3__.clearStorage)
+//For testing
+
+
+// setTimeout(() => {
+//     console.log(projectManager.getProjects());
+// }, 5000)
+// setTimeout(() => {
+//     console.log(projectManager.getProjects());
+// }, 10000)
 
 
 /***/ }),
@@ -646,9 +676,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Project)
 /* harmony export */ });
-/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
-/* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tasks */ "./src/tasks.js");
-/* harmony import */ var _localStorage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./localStorage */ "./src/localStorage.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ "./src/index.js");
+/* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
+/* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tasks */ "./src/tasks.js");
+/* harmony import */ var _localStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./localStorage */ "./src/localStorage.js");
+
 
 
 
@@ -656,10 +688,12 @@ __webpack_require__.r(__webpack_exports__);
 function Project(name) {
     let tasks = [];
 
-    const setTask = (name, description, dueDate) => {
-        let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_1__["default"])(name, description, dueDate)
+    const setTask = (name, description, dueDate, projectName = this) => {
+        let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_2__["default"])(name, description, dueDate, projectName);
         tasks.push(temp);
-        (0,_localStorage__WEBPACK_IMPORTED_MODULE_2__.saveTasks)(tasks);
+        // console.log(temp);
+
+        (0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(___WEBPACK_IMPORTED_MODULE_0__["default"].getProjects());
     }
 
     const getTasks = () => {
@@ -674,17 +708,20 @@ function Project(name) {
         tasks.forEach(task => {
             if (task.name === name) {
                 tasks = tasks.filter(task => task.name !== name);
+                ___WEBPACK_IMPORTED_MODULE_0__["default"].deleteTask(name, this);
             }
         })
-        ;(0,_localStorage__WEBPACK_IMPORTED_MODULE_2__.saveTasks)(tasks);
+
+        ;(0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(___WEBPACK_IMPORTED_MODULE_0__["default"].getProjects());
         refreshTasks(this);
     }
 
     function refreshTasks(project = this) {
-        _renderContent__WEBPACK_IMPORTED_MODULE_0__["default"].renderTasks(tasks, project);
+        _renderContent__WEBPACK_IMPORTED_MODULE_1__["default"].renderTasks(tasks, project);
     }
     return {
         name,
+        tasks,
         getName,
         setTask,
         getTasks,
@@ -783,6 +820,7 @@ let renderContent = (function () {
                 delBtn.innerHTML = 'Delete Task';
                 delBtn.addEventListener('click', () => {
                     project.deleteTask(element.name);
+
                 })
 
                 task.appendChild(title);
@@ -838,9 +876,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ task)
 /* harmony export */ });
-function task(name, description, dueDate) {
-    let finished = false;
-
+function task(name, description, dueDate, projectName, finished = false) {
+    // let finished = false;
     const getTaskInfo = () => {
         return {
             name, description, dueDate
@@ -861,6 +898,8 @@ function task(name, description, dueDate) {
         name,
         description,
         dueDate,
+        projectName,
+        finished,
         getTaskInfo,
         getStatus,
         changeStatus
