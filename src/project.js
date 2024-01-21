@@ -9,7 +9,6 @@ export default function Project(name) {
     const setTask = (name, description, dueDate, finished) => {
         let temp = task(name, description, dueDate, finished);
         tasks.push(temp);
-        // console.log(temp);
 
         saveProjects(projectManager.getProjects());
     }
@@ -30,7 +29,6 @@ export default function Project(name) {
             }
         })
 
-        // saveProjects(projectManager.getProjects());
         refreshTasks(this);
     }
 

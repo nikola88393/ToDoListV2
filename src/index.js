@@ -2,7 +2,7 @@ import './style.css'
 import renderContent from './renderContent';
 import Project from './project';
 import { saveProjects, loadProjects } from "./localStorage";
-import { displayProjectForm } from './manageForms';
+import { displayProjectForm, displayTaskForm, insertProjectOptions } from './manageForms';
 
 
 const projectManager = (function () {
@@ -84,6 +84,18 @@ const projectManager = (function () {
         displayProjectForm();
     })
 
+    const handleAddTask = () => {
+        let newTaskBtn = document.getElementById('newTaskBtn');
+        newTaskBtn.addEventListener('click', () => {
+            displayTaskForm();
+            insertProjectOptions(projects)
+        });
+    }
+
+    const findProjectByName = (name) => {
+        return projects.find(element => element.name === name);
+    }
+
     return {
         addProject,
         renderProjects,
@@ -91,25 +103,13 @@ const projectManager = (function () {
         deleteTask,
         getProjects,
         checkLocalStorage,
-        changeTaskStatus
+        changeTaskStatus,
+        handleAddTask,
+        findProjectByName
     }
 })();
 
 export default projectManager
 
-projectManager.checkLocalStorage()
-// projectManager.createDefaultSetting();
-// clearStorage()
-console.log(projectManager.getProjects());
-
-
-
-//For testing
-
-
-// setTimeout(() => {
-//     console.log(projectManager.getProjects());
-// }, 5000)
-// setTimeout(() => {
-//     console.log(projectManager.getProjects());
-// }, 10000)
+projectManager.checkLocalStorage();
+projectManager.handleAddTask();

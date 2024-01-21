@@ -620,6 +620,18 @@ const projectManager = (function () {
         (0,_manageForms__WEBPACK_IMPORTED_MODULE_4__.displayProjectForm)();
     })
 
+    const handleAddTask = () => {
+        let newTaskBtn = document.getElementById('newTaskBtn');
+        newTaskBtn.addEventListener('click', () => {
+            (0,_manageForms__WEBPACK_IMPORTED_MODULE_4__.displayTaskForm)();
+            (0,_manageForms__WEBPACK_IMPORTED_MODULE_4__.insertProjectOptions)(projects)
+        });
+    }
+
+    const findProjectByName = (name) => {
+        return projects.find(element => element.name === name);
+    }
+
     return {
         addProject,
         renderProjects,
@@ -627,28 +639,16 @@ const projectManager = (function () {
         deleteTask,
         getProjects,
         checkLocalStorage,
-        changeTaskStatus
+        changeTaskStatus,
+        handleAddTask,
+        findProjectByName
     }
 })();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (projectManager);
 
-projectManager.checkLocalStorage()
-// projectManager.createDefaultSetting();
-// clearStorage()
-console.log(projectManager.getProjects());
-
-
-
-//For testing
-
-
-// setTimeout(() => {
-//     console.log(projectManager.getProjects());
-// }, 5000)
-// setTimeout(() => {
-//     console.log(projectManager.getProjects());
-// }, 10000)
+projectManager.checkLocalStorage();
+projectManager.handleAddTask();
 
 
 /***/ }),
@@ -708,18 +708,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   displayProjectForm: () => (/* binding */ displayProjectForm),
 /* harmony export */   displayTaskForm: () => (/* binding */ displayTaskForm),
 /* harmony export */   getProjectFormData: () => (/* binding */ getProjectFormData),
-/* harmony export */   getTaskFormData: () => (/* binding */ getTaskFormData)
+/* harmony export */   getTaskFormData: () => (/* binding */ getTaskFormData),
+/* harmony export */   insertProjectOptions: () => (/* binding */ insertProjectOptions)
 /* harmony export */ });
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ "./src/index.js");
 
 
 function displayProjectForm() {
     let form = document.getElementById('projectForm');
-    form.style.display = (form.style.display === 'none') ? 'flex' : 'none';
+    form.style.display = (getComputedStyle(form).display === 'none') ? 'flex' : 'none';
 }
 function getProjectFormData() {
     let title = document.getElementById('projectName').value;
 
+    document.getElementById('projectName').value = '';
     return {
         title
     }
@@ -729,21 +731,23 @@ const AddNewProjectBtn = document.getElementById('addProject');
 AddNewProjectBtn.addEventListener('click', () => {
     let obj = getProjectFormData();
 
-    ___WEBPACK_IMPORTED_MODULE_0__["default"].addProject(obj.title);
-    ___WEBPACK_IMPORTED_MODULE_0__["default"].renderProjects();
+    if (obj.title) {
+        ___WEBPACK_IMPORTED_MODULE_0__["default"].addProject(obj.title);
+        ___WEBPACK_IMPORTED_MODULE_0__["default"].renderProjects();
 
-    displayProjectForm();
-    console.log(obj);
+        displayProjectForm();
+    }
 })
 
 function displayTaskForm() {
     let form = document.getElementById('taskForm');
-    form.style.display = (form.style.display === 'none') ? 'flex' : 'none';
+    form.style.display = (getComputedStyle(form).display === 'none') ? 'flex' : 'none';
 }
 function getTaskFormData() {
     let title = document.getElementById('taskName').value;
     let dueDate = document.getElementById('dueDate').value;
     let description = document.getElementById('taskDescription').value;
+    let project = document.getElementById('projectInput').value;
 
     document.getElementById('taskName').value = '';
     document.getElementById('dueDate').value = '';
@@ -752,8 +756,35 @@ function getTaskFormData() {
     return {
         title,
         dueDate,
-        description
+        description,
+        project
     }
+}
+
+const addTaskBtn = document.getElementById('addTask');
+addTaskBtn.addEventListener('click', () => {
+    let { title, dueDate, description, project } = getTaskFormData();
+    let obj = ___WEBPACK_IMPORTED_MODULE_0__["default"].findProjectByName(project);
+
+    if (title && dueDate && description) {
+        obj.setTask(title, dueDate, description);
+        obj.refreshTasks();
+
+        displayTaskForm();
+    }
+})
+
+function insertProjectOptions(projects) {
+    let container = document.getElementById('projectInput');
+    container.innerHTML = '';
+
+    projects.forEach(element => {
+        let option = document.createElement('option');
+        option.setAttribute('value', element.name);
+        option.innerHTML = element.name;
+
+        container.appendChild(option);
+    });
 }
 
 
@@ -784,7 +815,6 @@ function Project(name) {
     const setTask = (name, description, dueDate, finished) => {
         let temp = (0,_tasks__WEBPACK_IMPORTED_MODULE_2__["default"])(name, description, dueDate, finished);
         tasks.push(temp);
-        // console.log(temp);
 
         (0,_localStorage__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(___WEBPACK_IMPORTED_MODULE_0__["default"].getProjects());
     }
@@ -805,7 +835,6 @@ function Project(name) {
             }
         })
 
-        // saveProjects(projectManager.getProjects());
         refreshTasks(this);
     }
 
@@ -874,27 +903,6 @@ let renderContent = (function () {
         let container = document.getElementById('tasksContainer');
         container.innerHTML = '';
 
-        let newTaskBtn = document.createElement('button');
-        // newTaskBtn.id = `newTaskFor${project.name}`;
-        newTaskBtn.innerHTML = `Add new task for ${project.name}`;
-
-        newTaskBtn.addEventListener('click', _manageForms__WEBPACK_IMPORTED_MODULE_1__.displayTaskForm);
-
-        let addNewTaskBtn = document.getElementById('addTask');
-
-        addNewTaskBtn.addEventListener('click', () => {
-            let { title, description, dueDate } = (0,_manageForms__WEBPACK_IMPORTED_MODULE_1__.getTaskFormData)();
-
-            if (title && description && dueDate) {
-                project.setTask(title, description, dueDate);
-                project.refreshTasks();
-
-                (0,_manageForms__WEBPACK_IMPORTED_MODULE_1__.displayTaskForm)();
-            }
-        });
-
-        container.appendChild(newTaskBtn);
-
         let tasksContainer = document.createElement('ul');
         tasksContainer.id = 'tasksList';
 
@@ -918,7 +926,6 @@ let renderContent = (function () {
                 let statusChange = document.createElement('button');
                 statusChange.innerHTML = 'Change status';
                 statusChange.addEventListener('click', () => {
-                    // element.changeStatus();
                     ___WEBPACK_IMPORTED_MODULE_0__["default"].changeTaskStatus(project, element.name);
                     status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
                 });

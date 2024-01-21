@@ -35,27 +35,6 @@ let renderContent = (function () {
         let container = document.getElementById('tasksContainer');
         container.innerHTML = '';
 
-        let newTaskBtn = document.createElement('button');
-        // newTaskBtn.id = `newTaskFor${project.name}`;
-        newTaskBtn.innerHTML = `Add new task for ${project.name}`;
-
-        newTaskBtn.addEventListener('click', displayTaskForm);
-
-        let addNewTaskBtn = document.getElementById('addTask');
-
-        addNewTaskBtn.addEventListener('click', () => {
-            let { title, description, dueDate } = getTaskFormData();
-
-            if (title && description && dueDate) {
-                project.setTask(title, description, dueDate);
-                project.refreshTasks();
-
-                displayTaskForm();
-            }
-        });
-
-        container.appendChild(newTaskBtn);
-
         let tasksContainer = document.createElement('ul');
         tasksContainer.id = 'tasksList';
 
@@ -79,7 +58,6 @@ let renderContent = (function () {
                 let statusChange = document.createElement('button');
                 statusChange.innerHTML = 'Change status';
                 statusChange.addEventListener('click', () => {
-                    // element.changeStatus();
                     projectManager.changeTaskStatus(project, element.name);
                     status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
                 });
