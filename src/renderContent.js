@@ -1,4 +1,5 @@
 import projectManager from ".";
+import { getTaskFormData, displayTaskForm } from "./manageForms";
 
 let renderContent = (function () {
     const renderProject = (array) => {
@@ -35,12 +36,23 @@ let renderContent = (function () {
         container.innerHTML = '';
 
         let newTaskBtn = document.createElement('button');
-        newTaskBtn.id = `newTaskFor${project.name}`;
+        // newTaskBtn.id = `newTaskFor${project.name}`;
         newTaskBtn.innerHTML = `Add new task for ${project.name}`;
-        newTaskBtn.addEventListener('click', () => {
-            project.setTask('task' + Math.floor(Math.random() * 100), 'set by', 'new task btn');
-            project.refreshTasks();
-        })
+
+        newTaskBtn.addEventListener('click', displayTaskForm);
+
+        let addNewTaskBtn = document.getElementById('addTask');
+
+        addNewTaskBtn.addEventListener('click', () => {
+            let { title, description, dueDate } = getTaskFormData();
+
+            if (title && description && dueDate) {
+                project.setTask(title, description, dueDate);
+                project.refreshTasks();
+
+                displayTaskForm();
+            }
+        });
 
         container.appendChild(newTaskBtn);
 

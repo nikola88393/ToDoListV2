@@ -27,8 +27,37 @@ ___CSS_LOADER_EXPORT___.push([module.id, `* {
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+}
+
+#wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+#projectForm,
+#taskForm {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(46, 46, 46, 0.7);
+}
+
+/* #projectForm,
+#taskForm {
+} */
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid red;
+    gap: 15px;
 }
 
 .projectsContainer,
@@ -43,7 +72,7 @@ body {
     border: 1px solid red;
     margin: 10px;
     padding: 10px
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,UAAU;IACV,SAAS;AACb;;AAEA;IACI,YAAY;IACZ,aAAa;AACjB;;AAEA;;IAEI,WAAW;IACX,WAAW;IACX,qBAAqB;AACzB;;AAEA;;IAEI,qBAAqB;IACrB,YAAY;IACZ;AACJ","sourcesContent":["* {\n    padding: 0;\n    margin: 0;\n}\n\nbody {\n    width: 100vw;\n    height: 100vh;\n}\n\n.projectsContainer,\n.tasksContainer {\n    width: 100%;\n    height: 50%;\n    border: 1px solid red;\n}\n\n.task,\n.project {\n    border: 1px solid red;\n    margin: 10px;\n    padding: 10px\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,UAAU;IACV,SAAS;AACb;;AAEA;IACI,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;;IAEI,eAAe;IACf,WAAW;IACX,YAAY;IACZ,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,uCAAuC;AAC3C;;AAEA;;GAEG;;AAEH;IACI,aAAa;IACb,sBAAsB;IACtB,aAAa;IACb,mBAAmB;IACnB,qBAAqB;IACrB,SAAS;AACb;;AAEA;;IAEI,WAAW;IACX,WAAW;IACX,qBAAqB;AACzB;;AAEA;;IAEI,qBAAqB;IACrB,YAAY;IACZ;AACJ","sourcesContent":["* {\n    padding: 0;\n    margin: 0;\n}\n\nbody {\n    width: 100%;\n    height: 100%;\n}\n\n#wrapper {\n    height: 100%;\n    width: 100%;\n}\n\n#projectForm,\n#taskForm {\n    position: fixed;\n    width: 100%;\n    height: 100%;\n    display: none;\n    align-items: center;\n    justify-content: center;\n    background-color: rgba(46, 46, 46, 0.7);\n}\n\n/* #projectForm,\n#taskForm {\n} */\n\n.formWrapper {\n    display: flex;\n    flex-direction: column;\n    padding: 20px;\n    border-radius: 15px;\n    border: 1px solid red;\n    gap: 15px;\n}\n\n.projectsContainer,\n.tasksContainer {\n    width: 100%;\n    height: 50%;\n    border: 1px solid red;\n}\n\n.task,\n.project {\n    border: 1px solid red;\n    margin: 10px;\n    padding: 10px\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -504,6 +533,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _renderContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./renderContent */ "./src/renderContent.js");
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./project */ "./src/project.js");
 /* harmony import */ var _localStorage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./localStorage */ "./src/localStorage.js");
+/* harmony import */ var _manageForms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./manageForms */ "./src/manageForms.js");
+
 
 
 
@@ -584,32 +615,14 @@ const projectManager = (function () {
         _renderContent__WEBPACK_IMPORTED_MODULE_1__["default"].renderProject(projects);
     }
 
-    const addProjectHandler = (name = `test${Math.floor(Math.random() * 100)}`) => {
-        addProject(name);
-        renderProjects();
-    }
-
     const addProjectButton = document.getElementById('newProjectBtn');
     addProjectButton.addEventListener('click', () => {
-        addProjectHandler();
+        (0,_manageForms__WEBPACK_IMPORTED_MODULE_4__.displayProjectForm)();
     })
 
-    //doesn't work as intended
-    const createDefaultSetting = () => {
-        // checkLocalStorage();
-        addProject('Default1');
-        addProject('Default2');
-        // addProject('Default3');
-        // saveProjects(projects);
-        // checkLocalStorage();
-        // renderProjects();
-        // for (let i = 0; i < 3; i++) {
-        //     projects[0].setTask(`Task${i}`, `Task${i}`, `Task${i}`);
-        // }
-    }
-
     return {
-        createDefaultSetting,
+        addProject,
+        renderProjects,
         deleteProject,
         deleteTask,
         getProjects,
@@ -681,6 +694,68 @@ function clearStorage() {
 const clearStorageBtn = document.getElementById('clearStorage');
 
 clearStorageBtn.addEventListener('click', clearStorage);
+
+/***/ }),
+
+/***/ "./src/manageForms.js":
+/*!****************************!*\
+  !*** ./src/manageForms.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   displayProjectForm: () => (/* binding */ displayProjectForm),
+/* harmony export */   displayTaskForm: () => (/* binding */ displayTaskForm),
+/* harmony export */   getProjectFormData: () => (/* binding */ getProjectFormData),
+/* harmony export */   getTaskFormData: () => (/* binding */ getTaskFormData)
+/* harmony export */ });
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ "./src/index.js");
+
+
+function displayProjectForm() {
+    let form = document.getElementById('projectForm');
+    form.style.display = (form.style.display === 'none') ? 'flex' : 'none';
+}
+function getProjectFormData() {
+    let title = document.getElementById('projectName').value;
+
+    return {
+        title
+    }
+}
+const AddNewProjectBtn = document.getElementById('addProject');
+
+AddNewProjectBtn.addEventListener('click', () => {
+    let obj = getProjectFormData();
+
+    ___WEBPACK_IMPORTED_MODULE_0__["default"].addProject(obj.title);
+    ___WEBPACK_IMPORTED_MODULE_0__["default"].renderProjects();
+
+    displayProjectForm();
+    console.log(obj);
+})
+
+function displayTaskForm() {
+    let form = document.getElementById('taskForm');
+    form.style.display = (form.style.display === 'none') ? 'flex' : 'none';
+}
+function getTaskFormData() {
+    let title = document.getElementById('taskName').value;
+    let dueDate = document.getElementById('dueDate').value;
+    let description = document.getElementById('taskDescription').value;
+
+    document.getElementById('taskName').value = '';
+    document.getElementById('dueDate').value = '';
+    document.getElementById('taskDescription').value = '';
+
+    return {
+        title,
+        dueDate,
+        description
+    }
+}
+
 
 /***/ }),
 
@@ -761,6 +836,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ "./src/index.js");
+/* harmony import */ var _manageForms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./manageForms */ "./src/manageForms.js");
+
 
 
 let renderContent = (function () {
@@ -798,12 +875,23 @@ let renderContent = (function () {
         container.innerHTML = '';
 
         let newTaskBtn = document.createElement('button');
-        newTaskBtn.id = `newTaskFor${project.name}`;
+        // newTaskBtn.id = `newTaskFor${project.name}`;
         newTaskBtn.innerHTML = `Add new task for ${project.name}`;
-        newTaskBtn.addEventListener('click', () => {
-            project.setTask('task' + Math.floor(Math.random() * 100), 'set by', 'new task btn');
-            project.refreshTasks();
-        })
+
+        newTaskBtn.addEventListener('click', _manageForms__WEBPACK_IMPORTED_MODULE_1__.displayTaskForm);
+
+        let addNewTaskBtn = document.getElementById('addTask');
+
+        addNewTaskBtn.addEventListener('click', () => {
+            let { title, description, dueDate } = (0,_manageForms__WEBPACK_IMPORTED_MODULE_1__.getTaskFormData)();
+
+            if (title && description && dueDate) {
+                project.setTask(title, description, dueDate);
+                project.refreshTasks();
+
+                (0,_manageForms__WEBPACK_IMPORTED_MODULE_1__.displayTaskForm)();
+            }
+        });
 
         container.appendChild(newTaskBtn);
 

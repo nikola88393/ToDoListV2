@@ -6,12 +6,37 @@
     <title>To Do List</title>
 </head>
 <body>
-    <h1>Welcome to my to do list app</h1>
-    <button id="clearStorage">Clear storage</button>
-    <div class="projectsContainer">
-        <button id="newProjectBtn">Add new project</button>
-        <ul id="projectsList"></ul>
-    </div>
+    <div id="wrapper">
+        <div id="projectForm">
+            <div class="formWrapper">
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName">
+                <button id="addProject">Add project</button>
+            </div>
+            
+        </div>
+        <div id="taskForm">
+            <div class="formWrapper">
+                <label for="taskName">Task name:</label>
+                <input type="text" id="taskName">
+
+                <label for="dueDate">Due date:</label>
+                <input type="date" id="dueDate">
+    
+                <label for="taskDescription">Description:</label>
+                <textarea name="taskDescription" id="taskDescription" cols="30" rows="10"></textarea>
+                    
+                <button id="addTask">Add task</button>
+            </div>   
+        </div>
+        <h1>Welcome to my to do list app</h1>
+        <button id="clearStorage">Clear storage</button>
+        <div class="projectsContainer">
+            <button id="newProjectBtn">Add new project</button>
+            <ul id="projectsList"></ul>
+        </div>
     <div id="tasksContainer"></div>
+    </div>
+    
 </body>
 </html>

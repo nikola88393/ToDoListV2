@@ -2,6 +2,7 @@ import './style.css'
 import renderContent from './renderContent';
 import Project from './project';
 import { saveProjects, loadProjects } from "./localStorage";
+import { displayProjectForm } from './manageForms';
 
 
 const projectManager = (function () {
@@ -78,32 +79,14 @@ const projectManager = (function () {
         renderContent.renderProject(projects);
     }
 
-    const addProjectHandler = (name = `test${Math.floor(Math.random() * 100)}`) => {
-        addProject(name);
-        renderProjects();
-    }
-
     const addProjectButton = document.getElementById('newProjectBtn');
     addProjectButton.addEventListener('click', () => {
-        addProjectHandler();
+        displayProjectForm();
     })
 
-    //doesn't work as intended
-    const createDefaultSetting = () => {
-        // checkLocalStorage();
-        addProject('Default1');
-        addProject('Default2');
-        // addProject('Default3');
-        // saveProjects(projects);
-        // checkLocalStorage();
-        // renderProjects();
-        // for (let i = 0; i < 3; i++) {
-        //     projects[0].setTask(`Task${i}`, `Task${i}`, `Task${i}`);
-        // }
-    }
-
     return {
-        createDefaultSetting,
+        addProject,
+        renderProjects,
         deleteProject,
         deleteTask,
         getProjects,
