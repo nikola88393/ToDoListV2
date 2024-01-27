@@ -1,7 +1,4 @@
-import projectManager from ".";
-
 export default function task(name, description, dueDate, finished = false) {
-    // let finished = false;
     const getTaskInfo = () => {
         return {
             name, description, dueDate

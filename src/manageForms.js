@@ -41,8 +41,8 @@ export function getTaskFormData() {
 
     return {
         title,
-        dueDate,
         description,
+        dueDate,
         project
     }
 }
@@ -53,7 +53,7 @@ addTaskBtn.addEventListener('click', () => {
     let obj = projectManager.findProjectByName(project);
 
     if (title && dueDate && description) {
-        obj.setTask(title, dueDate, description);
+        obj.setTask(title, description, dueDate);
         obj.refreshTasks();
 
         displayTaskForm();

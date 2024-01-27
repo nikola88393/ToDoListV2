@@ -1,5 +1,4 @@
 import projectManager from ".";
-import { getTaskFormData, displayTaskForm } from "./manageForms";
 
 let renderContent = (function () {
     const renderProject = (array) => {
@@ -11,7 +10,7 @@ let renderContent = (function () {
             projectContainer.classList.add('project');
 
             let title = document.createElement('p');
-            title.innerHTML = element.name;
+            title.innerHTML = "Title: " + element.name;
             title.addEventListener('click', () => {
                 renderTasks(element.getTasks(), element);
             })
@@ -44,22 +43,24 @@ let renderContent = (function () {
                 task.classList.add('task');
 
                 let title = document.createElement('p');
-                title.innerHTML = element.name;
+                title.innerHTML = "Title: " + element.name;
 
                 let description = document.createElement('p');
-                description.innerHTML = element.description;
+                description.innerHTML = "Description: " + element.description;
+                console.log(element.description);
 
                 let dueDate = document.createElement('p');
-                dueDate.innerHTML = element.dueDate;
+                dueDate.innerHTML = "Due date: " + element.dueDate;
+                console.log(element.dueDate);
 
                 let status = document.createElement('p');
-                status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+                status.innerHTML = "Status: " + ((element.getStatus() === true) ? 'finished' : 'not finished');
 
                 let statusChange = document.createElement('button');
                 statusChange.innerHTML = 'Change status';
                 statusChange.addEventListener('click', () => {
                     projectManager.changeTaskStatus(project, element.name);
-                    status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+                    status.innerHTML = "Status: " + ((element.getStatus() === true) ? 'finished' : 'not finished');
                 });
 
                 let delBtn = document.createElement('button');

@@ -98,8 +98,29 @@ header {
     flex-direction: column;
     padding: 20px;
     border-radius: 15px;
-    border: 1px solid red;
     gap: 15px;
+    background-color: var(--blue);
+    color: var(--red);
+}
+
+input,
+select {
+    border: none;
+    border-radius: 5px;
+    color: var(--red);
+    padding: 5px;
+}
+
+textarea {
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    color: var(--red);
+}
+
+label {
+    color: var(--red);
+
 }
 
 .projectsContainer {
@@ -112,7 +133,7 @@ header {
 
 .projectsContainer button {
     width: 100%;
-    margin: 3px 0 3px 0;
+    margin-bottom: 8px;
 }
 
 #tasksContainer {
@@ -126,19 +147,20 @@ header {
 
 .task button {
     margin-right: 10px;
-
 }
-
 
 .task,
 .project {
     border: 2px solid var(--beige);
     border-radius: 10px;
     color: var(--beige);
-    margin: 10px;
     padding: 10px;
     box-shadow: var(--shadow);
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,eAAe;IACf,cAAc;IACd,yCAAyC;AAC7C;;AAEA;IACI,UAAU;IACV,SAAS;IACT,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,aAAa;IACb,sBAAsB;IACtB,SAAS;IACT,8BAA8B;AAClC;;AAEA;IACI,4BAA4B;IAC5B,YAAY;IACZ,mBAAmB;IACnB,4BAA4B;IAC5B,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,8BAA8B;IAC9B,iBAAiB;IACjB,gBAAgB;AACpB;;AAEA;IACI,6BAA6B;IAC7B,mBAAmB;IACnB,aAAa;IACb,uBAAuB;IACvB,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,aAAa;IACb,aAAa;IACb,YAAY;IACZ,SAAS;AACb;;AAEA;;IAEI,eAAe;IACf,YAAY;IACZ,aAAa;IACb,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,uCAAuC;AAC3C;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,aAAa;IACb,mBAAmB;IACnB,qBAAqB;IACrB,SAAS;AACb;;AAEA;IACI,6BAA6B;IAC7B,4BAA4B;IAC5B,+BAA+B;IAC/B,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,WAAW;IACX,6BAA6B;IAC7B,6BAA6B;IAC7B,gCAAgC;IAChC,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,kBAAkB;;AAEtB;;;AAGA;;IAEI,8BAA8B;IAC9B,mBAAmB;IACnB,mBAAmB;IACnB,YAAY;IACZ,aAAa;IACb,yBAAyB;AAC7B","sourcesContent":[":root {\n    --beige: #efe6d5;\n    --blue: #9dbeb7;\n    --red: #e73213;\n    --shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;\n}\n\n* {\n    padding: 0;\n    margin: 0;\n    font-weight: 700;\n    color: var(--beige);\n}\n\nul {\n    list-style-type: none;\n}\n\nhtml {\n    height: 100%;\n}\n\nbody {\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    background-color: var(--beige);\n}\n\nbutton {\n    border: 2px solid var(--red);\n    padding: 5px;\n    border-radius: 10px;\n    background-color: var(--red);\n    color: var(--beige);\n    transition: 0.2s;\n}\n\nbutton:hover {\n    background-color: var(--beige);\n    color: var(--red);\n    transition: 0.2s;\n}\n\nheader {\n    background-color: var(--blue);\n    color: var(--beige);\n    display: flex;\n    justify-content: center;\n    padding: 10px 0 10px 0;\n    box-shadow: var(--shadow);\n}\n\n.projectTaskContainer {\n    display: flex;\n    padding: 30px;\n    height: 100%;\n    gap: 10px;\n}\n\n#projectForm,\n#taskForm {\n    position: fixed;\n    width: 100vw;\n    height: 100vh;\n    display: none;\n    align-items: center;\n    justify-content: center;\n    background-color: rgba(46, 46, 46, 0.7);\n}\n\n.formWrapper {\n    display: flex;\n    flex-direction: column;\n    padding: 20px;\n    border-radius: 15px;\n    border: 1px solid red;\n    gap: 15px;\n}\n\n.projectsContainer {\n    background-color: var(--blue);\n    border-top-left-radius: 15px;\n    border-bottom-left-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.projectsContainer button {\n    width: 100%;\n    margin: 3px 0 3px 0;\n}\n\n#tasksContainer {\n    width: 100%;\n    background-color: var(--blue);\n    border-top-right-radius: 15px;\n    border-bottom-right-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.task button {\n    margin-right: 10px;\n\n}\n\n\n.task,\n.project {\n    border: 2px solid var(--beige);\n    border-radius: 10px;\n    color: var(--beige);\n    margin: 10px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}"],"sourceRoot":""}]);
+}
+
+.project {
+    margin-bottom: 8px;
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,eAAe;IACf,cAAc;IACd,yCAAyC;AAC7C;;AAEA;IACI,UAAU;IACV,SAAS;IACT,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,aAAa;IACb,sBAAsB;IACtB,SAAS;IACT,8BAA8B;AAClC;;AAEA;IACI,4BAA4B;IAC5B,YAAY;IACZ,mBAAmB;IACnB,4BAA4B;IAC5B,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,8BAA8B;IAC9B,iBAAiB;IACjB,gBAAgB;AACpB;;AAEA;IACI,6BAA6B;IAC7B,mBAAmB;IACnB,aAAa;IACb,uBAAuB;IACvB,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,aAAa;IACb,aAAa;IACb,YAAY;IACZ,SAAS;AACb;;AAEA;;IAEI,eAAe;IACf,YAAY;IACZ,aAAa;IACb,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,uCAAuC;AAC3C;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,aAAa;IACb,mBAAmB;IACnB,SAAS;IACT,6BAA6B;IAC7B,iBAAiB;AACrB;;AAEA;;IAEI,YAAY;IACZ,kBAAkB;IAClB,iBAAiB;IACjB,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,YAAY;IACZ,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,iBAAiB;;AAErB;;AAEA;IACI,6BAA6B;IAC7B,4BAA4B;IAC5B,+BAA+B;IAC/B,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,WAAW;IACX,kBAAkB;AACtB;;AAEA;IACI,WAAW;IACX,6BAA6B;IAC7B,6BAA6B;IAC7B,gCAAgC;IAChC,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,kBAAkB;AACtB;;AAEA;;IAEI,8BAA8B;IAC9B,mBAAmB;IACnB,mBAAmB;IACnB,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,kBAAkB;AACtB","sourcesContent":[":root {\n    --beige: #efe6d5;\n    --blue: #9dbeb7;\n    --red: #e73213;\n    --shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;\n}\n\n* {\n    padding: 0;\n    margin: 0;\n    font-weight: 700;\n    color: var(--beige);\n}\n\nul {\n    list-style-type: none;\n}\n\nhtml {\n    height: 100%;\n}\n\nbody {\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    background-color: var(--beige);\n}\n\nbutton {\n    border: 2px solid var(--red);\n    padding: 5px;\n    border-radius: 10px;\n    background-color: var(--red);\n    color: var(--beige);\n    transition: 0.2s;\n}\n\nbutton:hover {\n    background-color: var(--beige);\n    color: var(--red);\n    transition: 0.2s;\n}\n\nheader {\n    background-color: var(--blue);\n    color: var(--beige);\n    display: flex;\n    justify-content: center;\n    padding: 10px 0 10px 0;\n    box-shadow: var(--shadow);\n}\n\n.projectTaskContainer {\n    display: flex;\n    padding: 30px;\n    height: 100%;\n    gap: 10px;\n}\n\n#projectForm,\n#taskForm {\n    position: fixed;\n    width: 100vw;\n    height: 100vh;\n    display: none;\n    align-items: center;\n    justify-content: center;\n    background-color: rgba(46, 46, 46, 0.7);\n}\n\n.formWrapper {\n    display: flex;\n    flex-direction: column;\n    padding: 20px;\n    border-radius: 15px;\n    gap: 15px;\n    background-color: var(--blue);\n    color: var(--red);\n}\n\ninput,\nselect {\n    border: none;\n    border-radius: 5px;\n    color: var(--red);\n    padding: 5px;\n}\n\ntextarea {\n    border: none;\n    padding: 5px;\n    border-radius: 5px;\n    color: var(--red);\n}\n\nlabel {\n    color: var(--red);\n\n}\n\n.projectsContainer {\n    background-color: var(--blue);\n    border-top-left-radius: 15px;\n    border-bottom-left-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.projectsContainer button {\n    width: 100%;\n    margin-bottom: 8px;\n}\n\n#tasksContainer {\n    width: 100%;\n    background-color: var(--blue);\n    border-top-right-radius: 15px;\n    border-bottom-right-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.task button {\n    margin-right: 10px;\n}\n\n.task,\n.project {\n    border: 2px solid var(--beige);\n    border-radius: 10px;\n    color: var(--beige);\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.project {\n    margin-bottom: 8px;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -821,8 +843,8 @@ function getTaskFormData() {
 
     return {
         title,
-        dueDate,
         description,
+        dueDate,
         project
     }
 }
@@ -833,7 +855,7 @@ addTaskBtn.addEventListener('click', () => {
     let obj = ___WEBPACK_IMPORTED_MODULE_0__["default"].findProjectByName(project);
 
     if (title && dueDate && description) {
-        obj.setTask(title, dueDate, description);
+        obj.setTask(title, description, dueDate);
         obj.refreshTasks();
 
         displayTaskForm();
@@ -931,8 +953,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ "./src/index.js");
-/* harmony import */ var _manageForms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./manageForms */ "./src/manageForms.js");
-
 
 
 let renderContent = (function () {
@@ -945,7 +965,7 @@ let renderContent = (function () {
             projectContainer.classList.add('project');
 
             let title = document.createElement('p');
-            title.innerHTML = element.name;
+            title.innerHTML = "Title: " + element.name;
             title.addEventListener('click', () => {
                 renderTasks(element.getTasks(), element);
             })
@@ -978,22 +998,24 @@ let renderContent = (function () {
                 task.classList.add('task');
 
                 let title = document.createElement('p');
-                title.innerHTML = element.name;
+                title.innerHTML = "Title: " + element.name;
 
                 let description = document.createElement('p');
-                description.innerHTML = element.description;
+                description.innerHTML = "Description: " + element.description;
+                console.log(element.description);
 
                 let dueDate = document.createElement('p');
-                dueDate.innerHTML = element.dueDate;
+                dueDate.innerHTML = "Due date: " + element.dueDate;
+                console.log(element.dueDate);
 
                 let status = document.createElement('p');
-                status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+                status.innerHTML = "Status: " + ((element.getStatus() === true) ? 'finished' : 'not finished');
 
                 let statusChange = document.createElement('button');
                 statusChange.innerHTML = 'Change status';
                 statusChange.addEventListener('click', () => {
                     ___WEBPACK_IMPORTED_MODULE_0__["default"].changeTaskStatus(project, element.name);
-                    status.innerHTML = (element.getStatus() === true) ? 'finished' : 'not finished';
+                    status.innerHTML = "Status: " + ((element.getStatus() === true) ? 'finished' : 'not finished');
                 });
 
                 let delBtn = document.createElement('button');
@@ -1056,11 +1078,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ task)
 /* harmony export */ });
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ "./src/index.js");
-
-
 function task(name, description, dueDate, finished = false) {
-    // let finished = false;
     const getTaskInfo = () => {
         return {
             name, description, dueDate

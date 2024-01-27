@@ -75,8 +75,29 @@ header {
     flex-direction: column;
     padding: 20px;
     border-radius: 15px;
-    border: 1px solid red;
     gap: 15px;
+    background-color: var(--blue);
+    color: var(--red);
+}
+
+input,
+select {
+    border: none;
+    border-radius: 5px;
+    color: var(--red);
+    padding: 5px;
+}
+
+textarea {
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    color: var(--red);
+}
+
+label {
+    color: var(--red);
+
 }
 
 .projectsContainer {
@@ -89,7 +110,7 @@ header {
 
 .projectsContainer button {
     width: 100%;
-    margin: 3px 0 3px 0;
+    margin-bottom: 8px;
 }
 
 #tasksContainer {
@@ -103,16 +124,17 @@ header {
 
 .task button {
     margin-right: 10px;
-
 }
-
 
 .task,
 .project {
     border: 2px solid var(--beige);
     border-radius: 10px;
     color: var(--beige);
-    margin: 10px;
     padding: 10px;
     box-shadow: var(--shadow);
+}
+
+.project {
+    margin-bottom: 8px;
 }
