@@ -6,7 +6,9 @@
     <title>To Do List</title>
 </head>
 <body>
-    <div id="wrapper">
+    <header>
+        <h1>Welcome to my to do list app</h1>
+        </header>
         <div id="projectForm">
             <form class="formWrapper">
                 <label for="projectName">Project Name:</label>
@@ -32,15 +34,14 @@
                 <button type="button" id="addTask">Add task</button>
             </form>   
         </div>
-        <h1>Welcome to my to do list app</h1>
-        <button id="clearStorage">Clear storage</button>
-        <div id="projectsContainer" class="projectsContainer">
-            <button id="newProjectBtn">Add new project</button>
-            <button id="newTaskBtn">Add new task</button>
-            <ul id="projectsList"></ul>
+        <div class="projectTaskContainer">
+            <div id="projectsContainer" class="projectsContainer">
+                <button id="clearStorage">Clear storage</button>
+                <button id="newProjectBtn">Add new project</button>
+                <button id="newTaskBtn">Add new task</button>
+                <ul id="projectsList"></ul>
+            </div>
+        <div id="tasksContainer"></div>
         </div>
-    <div id="tasksContainer"></div>
-    </div>
-    
 </body>
 </html>

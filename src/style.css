@@ -1,32 +1,74 @@
+:root {
+    --beige: #efe6d5;
+    --blue: #9dbeb7;
+    --red: #e73213;
+    --shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 * {
     padding: 0;
     margin: 0;
+    font-weight: 700;
+    color: var(--beige);
+}
+
+ul {
+    list-style-type: none;
+}
+
+html {
+    height: 100%;
 }
 
 body {
-    width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--beige);
 }
 
-#wrapper {
+button {
+    border: 2px solid var(--red);
+    padding: 5px;
+    border-radius: 10px;
+    background-color: var(--red);
+    color: var(--beige);
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: var(--beige);
+    color: var(--red);
+    transition: 0.2s;
+}
+
+header {
+    background-color: var(--blue);
+    color: var(--beige);
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+    box-shadow: var(--shadow);
+}
+
+.projectTaskContainer {
+    display: flex;
+    padding: 30px;
     height: 100%;
-    width: 100%;
+    gap: 10px;
 }
 
 #projectForm,
 #taskForm {
     position: fixed;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: none;
     align-items: center;
     justify-content: center;
     background-color: rgba(46, 46, 46, 0.7);
 }
-
-/* #projectForm,
-#taskForm {
-} */
 
 .formWrapper {
     display: flex;
@@ -37,16 +79,40 @@ body {
     gap: 15px;
 }
 
-.projectsContainer,
-.tasksContainer {
-    width: 100%;
-    height: 50%;
-    border: 1px solid red;
+.projectsContainer {
+    background-color: var(--blue);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding: 10px;
+    box-shadow: var(--shadow);
 }
+
+.projectsContainer button {
+    width: 100%;
+    margin: 3px 0 3px 0;
+}
+
+#tasksContainer {
+    width: 100%;
+    background-color: var(--blue);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+}
+
+.task button {
+    margin-right: 10px;
+
+}
+
 
 .task,
 .project {
-    border: 1px solid red;
+    border: 2px solid var(--beige);
+    border-radius: 10px;
+    color: var(--beige);
     margin: 10px;
-    padding: 10px
+    padding: 10px;
+    box-shadow: var(--shadow);
 }

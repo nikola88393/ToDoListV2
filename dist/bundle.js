@@ -21,35 +21,77 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `* {
+___CSS_LOADER_EXPORT___.push([module.id, `:root {
+    --beige: #efe6d5;
+    --blue: #9dbeb7;
+    --red: #e73213;
+    --shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+* {
     padding: 0;
     margin: 0;
+    font-weight: 700;
+    color: var(--beige);
+}
+
+ul {
+    list-style-type: none;
+}
+
+html {
+    height: 100%;
 }
 
 body {
-    width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--beige);
 }
 
-#wrapper {
+button {
+    border: 2px solid var(--red);
+    padding: 5px;
+    border-radius: 10px;
+    background-color: var(--red);
+    color: var(--beige);
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: var(--beige);
+    color: var(--red);
+    transition: 0.2s;
+}
+
+header {
+    background-color: var(--blue);
+    color: var(--beige);
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+    box-shadow: var(--shadow);
+}
+
+.projectTaskContainer {
+    display: flex;
+    padding: 30px;
     height: 100%;
-    width: 100%;
+    gap: 10px;
 }
 
 #projectForm,
 #taskForm {
     position: fixed;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: none;
     align-items: center;
     justify-content: center;
     background-color: rgba(46, 46, 46, 0.7);
 }
-
-/* #projectForm,
-#taskForm {
-} */
 
 .formWrapper {
     display: flex;
@@ -60,19 +102,43 @@ body {
     gap: 15px;
 }
 
-.projectsContainer,
-.tasksContainer {
-    width: 100%;
-    height: 50%;
-    border: 1px solid red;
+.projectsContainer {
+    background-color: var(--blue);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding: 10px;
+    box-shadow: var(--shadow);
 }
+
+.projectsContainer button {
+    width: 100%;
+    margin: 3px 0 3px 0;
+}
+
+#tasksContainer {
+    width: 100%;
+    background-color: var(--blue);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+}
+
+.task button {
+    margin-right: 10px;
+
+}
+
 
 .task,
 .project {
-    border: 1px solid red;
+    border: 2px solid var(--beige);
+    border-radius: 10px;
+    color: var(--beige);
     margin: 10px;
-    padding: 10px
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,UAAU;IACV,SAAS;AACb;;AAEA;IACI,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,WAAW;AACf;;AAEA;;IAEI,eAAe;IACf,WAAW;IACX,YAAY;IACZ,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,uCAAuC;AAC3C;;AAEA;;GAEG;;AAEH;IACI,aAAa;IACb,sBAAsB;IACtB,aAAa;IACb,mBAAmB;IACnB,qBAAqB;IACrB,SAAS;AACb;;AAEA;;IAEI,WAAW;IACX,WAAW;IACX,qBAAqB;AACzB;;AAEA;;IAEI,qBAAqB;IACrB,YAAY;IACZ;AACJ","sourcesContent":["* {\n    padding: 0;\n    margin: 0;\n}\n\nbody {\n    width: 100%;\n    height: 100%;\n}\n\n#wrapper {\n    height: 100%;\n    width: 100%;\n}\n\n#projectForm,\n#taskForm {\n    position: fixed;\n    width: 100%;\n    height: 100%;\n    display: none;\n    align-items: center;\n    justify-content: center;\n    background-color: rgba(46, 46, 46, 0.7);\n}\n\n/* #projectForm,\n#taskForm {\n} */\n\n.formWrapper {\n    display: flex;\n    flex-direction: column;\n    padding: 20px;\n    border-radius: 15px;\n    border: 1px solid red;\n    gap: 15px;\n}\n\n.projectsContainer,\n.tasksContainer {\n    width: 100%;\n    height: 50%;\n    border: 1px solid red;\n}\n\n.task,\n.project {\n    border: 1px solid red;\n    margin: 10px;\n    padding: 10px\n}"],"sourceRoot":""}]);
+    padding: 10px;
+    box-shadow: var(--shadow);
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,eAAe;IACf,cAAc;IACd,yCAAyC;AAC7C;;AAEA;IACI,UAAU;IACV,SAAS;IACT,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,aAAa;IACb,sBAAsB;IACtB,SAAS;IACT,8BAA8B;AAClC;;AAEA;IACI,4BAA4B;IAC5B,YAAY;IACZ,mBAAmB;IACnB,4BAA4B;IAC5B,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,8BAA8B;IAC9B,iBAAiB;IACjB,gBAAgB;AACpB;;AAEA;IACI,6BAA6B;IAC7B,mBAAmB;IACnB,aAAa;IACb,uBAAuB;IACvB,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,aAAa;IACb,aAAa;IACb,YAAY;IACZ,SAAS;AACb;;AAEA;;IAEI,eAAe;IACf,YAAY;IACZ,aAAa;IACb,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,uCAAuC;AAC3C;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,aAAa;IACb,mBAAmB;IACnB,qBAAqB;IACrB,SAAS;AACb;;AAEA;IACI,6BAA6B;IAC7B,4BAA4B;IAC5B,+BAA+B;IAC/B,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,WAAW;IACX,6BAA6B;IAC7B,6BAA6B;IAC7B,gCAAgC;IAChC,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,kBAAkB;;AAEtB;;;AAGA;;IAEI,8BAA8B;IAC9B,mBAAmB;IACnB,mBAAmB;IACnB,YAAY;IACZ,aAAa;IACb,yBAAyB;AAC7B","sourcesContent":[":root {\n    --beige: #efe6d5;\n    --blue: #9dbeb7;\n    --red: #e73213;\n    --shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;\n}\n\n* {\n    padding: 0;\n    margin: 0;\n    font-weight: 700;\n    color: var(--beige);\n}\n\nul {\n    list-style-type: none;\n}\n\nhtml {\n    height: 100%;\n}\n\nbody {\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    background-color: var(--beige);\n}\n\nbutton {\n    border: 2px solid var(--red);\n    padding: 5px;\n    border-radius: 10px;\n    background-color: var(--red);\n    color: var(--beige);\n    transition: 0.2s;\n}\n\nbutton:hover {\n    background-color: var(--beige);\n    color: var(--red);\n    transition: 0.2s;\n}\n\nheader {\n    background-color: var(--blue);\n    color: var(--beige);\n    display: flex;\n    justify-content: center;\n    padding: 10px 0 10px 0;\n    box-shadow: var(--shadow);\n}\n\n.projectTaskContainer {\n    display: flex;\n    padding: 30px;\n    height: 100%;\n    gap: 10px;\n}\n\n#projectForm,\n#taskForm {\n    position: fixed;\n    width: 100vw;\n    height: 100vh;\n    display: none;\n    align-items: center;\n    justify-content: center;\n    background-color: rgba(46, 46, 46, 0.7);\n}\n\n.formWrapper {\n    display: flex;\n    flex-direction: column;\n    padding: 20px;\n    border-radius: 15px;\n    border: 1px solid red;\n    gap: 15px;\n}\n\n.projectsContainer {\n    background-color: var(--blue);\n    border-top-left-radius: 15px;\n    border-bottom-left-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.projectsContainer button {\n    width: 100%;\n    margin: 3px 0 3px 0;\n}\n\n#tasksContainer {\n    width: 100%;\n    background-color: var(--blue);\n    border-top-right-radius: 15px;\n    border-bottom-right-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.task button {\n    margin-right: 10px;\n\n}\n\n\n.task,\n.project {\n    border: 2px solid var(--beige);\n    border-radius: 10px;\n    color: var(--beige);\n    margin: 10px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
