@@ -57,13 +57,14 @@ button {
     border-radius: 10px;
     background-color: var(--red);
     color: var(--beige);
-    transition: 0.2s;
+    transition: 0.1s;
+    box-shadow: var(--shadow);
 }
 
 button:hover {
     background-color: var(--beige);
     color: var(--red);
-    transition: 0.2s;
+    transition: 0.1s;
 }
 
 header {
@@ -120,6 +121,10 @@ textarea {
 
 label {
     color: var(--red);
+}
+
+option {
+    color: var(--red);
 
 }
 
@@ -160,19 +165,18 @@ label {
 .project {
     border: 2px solid var(--beige);
     border-radius: 10px;
-    color: var(--beige);
+    background-color: var(--beige);
     padding: 10px;
     box-shadow: var(--shadow);
+}
 
+.task p,
+.project p {
+    color: var(--blue);
 }
 
 .project {
     margin-bottom: 8px;
-}
-
-option {
-    color: var(--red);
-
 }
 
 .currentProject,
@@ -181,8 +185,13 @@ option {
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
-    border-bottom: 2px solid var(--red);
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,eAAe;IACf,cAAc;IACd,yCAAyC;AAC7C;;AAEA;IACI,UAAU;IACV,SAAS;IACT,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,aAAa;IACb,sBAAsB;IACtB,SAAS;IACT,8BAA8B;AAClC;;AAEA;IACI,4BAA4B;IAC5B,YAAY;IACZ,mBAAmB;IACnB,4BAA4B;IAC5B,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,8BAA8B;IAC9B,iBAAiB;IACjB,gBAAgB;AACpB;;AAEA;IACI,6BAA6B;IAC7B,mBAAmB;IACnB,aAAa;IACb,uBAAuB;IACvB,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,aAAa;IACb,aAAa;IACb,YAAY;IACZ,SAAS;AACb;;AAEA;;IAEI,eAAe;IACf,YAAY;IACZ,aAAa;IACb,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,uCAAuC;AAC3C;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,aAAa;IACb,mBAAmB;IACnB,SAAS;IACT,6BAA6B;IAC7B,iBAAiB;AACrB;;AAEA;;IAEI,YAAY;IACZ,kBAAkB;IAClB,iBAAiB;IACjB,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,YAAY;IACZ,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,iBAAiB;;AAErB;;AAEA;IACI,6BAA6B;IAC7B,4BAA4B;IAC5B,+BAA+B;IAC/B,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,WAAW;IACX,kBAAkB;AACtB;;AAEA;IACI,WAAW;IACX,6BAA6B;IAC7B,6BAA6B;IAC7B,gCAAgC;IAChC,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,kBAAkB;IAClB,gBAAgB;AACpB;;AAEA;IACI,aAAa;IACb,2DAA2D;IAC3D,cAAc;AAClB;;AAEA;;IAEI,8BAA8B;IAC9B,mBAAmB;IACnB,mBAAmB;IACnB,aAAa;IACb,yBAAyB;;AAE7B;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;;AAErB;;AAEA;;IAEI,aAAa;IACb,mBAAmB;IACnB,aAAa;IACb,uBAAuB;IACvB,mCAAmC;AACvC","sourcesContent":[":root {\n    --beige: #efe6d5;\n    --blue: #9dbeb7;\n    --red: #e73213;\n    --shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;\n}\n\n* {\n    padding: 0;\n    margin: 0;\n    font-weight: 700;\n    color: var(--beige);\n}\n\nul {\n    list-style-type: none;\n}\n\nhtml {\n    height: 100%;\n}\n\nbody {\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    background-color: var(--beige);\n}\n\nbutton {\n    border: 2px solid var(--red);\n    padding: 5px;\n    border-radius: 10px;\n    background-color: var(--red);\n    color: var(--beige);\n    transition: 0.2s;\n}\n\nbutton:hover {\n    background-color: var(--beige);\n    color: var(--red);\n    transition: 0.2s;\n}\n\nheader {\n    background-color: var(--blue);\n    color: var(--beige);\n    display: flex;\n    justify-content: center;\n    padding: 10px 0 10px 0;\n    box-shadow: var(--shadow);\n}\n\n.projectTaskContainer {\n    display: flex;\n    padding: 30px;\n    height: 100%;\n    gap: 10px;\n}\n\n#projectForm,\n#taskForm {\n    position: fixed;\n    width: 100vw;\n    height: 100vh;\n    display: none;\n    align-items: center;\n    justify-content: center;\n    background-color: rgba(46, 46, 46, 0.7);\n}\n\n.formWrapper {\n    display: flex;\n    flex-direction: column;\n    padding: 20px;\n    border-radius: 15px;\n    gap: 15px;\n    background-color: var(--blue);\n    color: var(--red);\n}\n\ninput,\nselect {\n    border: none;\n    border-radius: 5px;\n    color: var(--red);\n    padding: 5px;\n}\n\ntextarea {\n    border: none;\n    padding: 5px;\n    border-radius: 5px;\n    color: var(--red);\n}\n\nlabel {\n    color: var(--red);\n\n}\n\n.projectsContainer {\n    background-color: var(--blue);\n    border-top-left-radius: 15px;\n    border-bottom-left-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.projectsContainer button {\n    width: 100%;\n    margin-bottom: 8px;\n}\n\n#tasksContainer {\n    width: 100%;\n    background-color: var(--blue);\n    border-top-right-radius: 15px;\n    border-bottom-right-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.task button {\n    margin-right: 10px;\n    margin-top: 10px;\n}\n\n#tasksList {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n    grid-gap: 10px;\n}\n\n.task,\n.project {\n    border: 2px solid var(--beige);\n    border-radius: 10px;\n    color: var(--beige);\n    padding: 10px;\n    box-shadow: var(--shadow);\n\n}\n\n.project {\n    margin-bottom: 8px;\n}\n\noption {\n    color: var(--red);\n\n}\n\n.currentProject,\n.projectList {\n    padding: 10px;\n    margin-bottom: 10px;\n    display: flex;\n    justify-content: center;\n    border-bottom: 2px solid var(--red);\n}"],"sourceRoot":""}]);
+    border-bottom: 2px solid var(--beige);
+    padding: 5px;
+    border-radius: 10px;
+    background-color: var(--beige);
+    color: var(--blue);
+    box-shadow: var(--shadow);
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,eAAe;IACf,cAAc;IACd,yCAAyC;AAC7C;;AAEA;IACI,UAAU;IACV,SAAS;IACT,gBAAgB;IAChB,mBAAmB;AACvB;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,aAAa;IACb,sBAAsB;IACtB,SAAS;IACT,8BAA8B;AAClC;;AAEA;IACI,4BAA4B;IAC5B,YAAY;IACZ,mBAAmB;IACnB,4BAA4B;IAC5B,mBAAmB;IACnB,gBAAgB;IAChB,yBAAyB;AAC7B;;AAEA;IACI,8BAA8B;IAC9B,iBAAiB;IACjB,gBAAgB;AACpB;;AAEA;IACI,6BAA6B;IAC7B,mBAAmB;IACnB,aAAa;IACb,uBAAuB;IACvB,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,aAAa;IACb,aAAa;IACb,YAAY;IACZ,SAAS;AACb;;AAEA;;IAEI,eAAe;IACf,YAAY;IACZ,aAAa;IACb,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,uCAAuC;AAC3C;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,aAAa;IACb,mBAAmB;IACnB,SAAS;IACT,6BAA6B;IAC7B,iBAAiB;AACrB;;AAEA;;IAEI,YAAY;IACZ,kBAAkB;IAClB,iBAAiB;IACjB,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,YAAY;IACZ,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,iBAAiB;;AAErB;;AAEA;IACI,6BAA6B;IAC7B,4BAA4B;IAC5B,+BAA+B;IAC/B,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,WAAW;IACX,kBAAkB;AACtB;;AAEA;IACI,WAAW;IACX,6BAA6B;IAC7B,6BAA6B;IAC7B,gCAAgC;IAChC,aAAa;IACb,yBAAyB;AAC7B;;AAEA;IACI,kBAAkB;IAClB,gBAAgB;AACpB;;AAEA;IACI,aAAa;IACb,2DAA2D;IAC3D,cAAc;AAClB;;AAEA;;IAEI,8BAA8B;IAC9B,mBAAmB;IACnB,8BAA8B;IAC9B,aAAa;IACb,yBAAyB;AAC7B;;AAEA;;IAEI,kBAAkB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;;IAEI,aAAa;IACb,mBAAmB;IACnB,aAAa;IACb,uBAAuB;IACvB,qCAAqC;IACrC,YAAY;IACZ,mBAAmB;IACnB,8BAA8B;IAC9B,kBAAkB;IAClB,yBAAyB;AAC7B","sourcesContent":[":root {\n    --beige: #efe6d5;\n    --blue: #9dbeb7;\n    --red: #e73213;\n    --shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;\n}\n\n* {\n    padding: 0;\n    margin: 0;\n    font-weight: 700;\n    color: var(--beige);\n}\n\nul {\n    list-style-type: none;\n}\n\nhtml {\n    height: 100%;\n}\n\nbody {\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    background-color: var(--beige);\n}\n\nbutton {\n    border: 2px solid var(--red);\n    padding: 5px;\n    border-radius: 10px;\n    background-color: var(--red);\n    color: var(--beige);\n    transition: 0.1s;\n    box-shadow: var(--shadow);\n}\n\nbutton:hover {\n    background-color: var(--beige);\n    color: var(--red);\n    transition: 0.1s;\n}\n\nheader {\n    background-color: var(--blue);\n    color: var(--beige);\n    display: flex;\n    justify-content: center;\n    padding: 10px 0 10px 0;\n    box-shadow: var(--shadow);\n}\n\n.projectTaskContainer {\n    display: flex;\n    padding: 30px;\n    height: 100%;\n    gap: 10px;\n}\n\n#projectForm,\n#taskForm {\n    position: fixed;\n    width: 100vw;\n    height: 100vh;\n    display: none;\n    align-items: center;\n    justify-content: center;\n    background-color: rgba(46, 46, 46, 0.7);\n}\n\n.formWrapper {\n    display: flex;\n    flex-direction: column;\n    padding: 20px;\n    border-radius: 15px;\n    gap: 15px;\n    background-color: var(--blue);\n    color: var(--red);\n}\n\ninput,\nselect {\n    border: none;\n    border-radius: 5px;\n    color: var(--red);\n    padding: 5px;\n}\n\ntextarea {\n    border: none;\n    padding: 5px;\n    border-radius: 5px;\n    color: var(--red);\n}\n\nlabel {\n    color: var(--red);\n}\n\noption {\n    color: var(--red);\n\n}\n\n.projectsContainer {\n    background-color: var(--blue);\n    border-top-left-radius: 15px;\n    border-bottom-left-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.projectsContainer button {\n    width: 100%;\n    margin-bottom: 8px;\n}\n\n#tasksContainer {\n    width: 100%;\n    background-color: var(--blue);\n    border-top-right-radius: 15px;\n    border-bottom-right-radius: 15px;\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.task button {\n    margin-right: 10px;\n    margin-top: 10px;\n}\n\n#tasksList {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n    grid-gap: 10px;\n}\n\n.task,\n.project {\n    border: 2px solid var(--beige);\n    border-radius: 10px;\n    background-color: var(--beige);\n    padding: 10px;\n    box-shadow: var(--shadow);\n}\n\n.task p,\n.project p {\n    color: var(--blue);\n}\n\n.project {\n    margin-bottom: 8px;\n}\n\n.currentProject,\n.projectList {\n    padding: 10px;\n    margin-bottom: 10px;\n    display: flex;\n    justify-content: center;\n    border-bottom: 2px solid var(--beige);\n    padding: 5px;\n    border-radius: 10px;\n    background-color: var(--beige);\n    color: var(--blue);\n    box-shadow: var(--shadow);\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1043,7 +1052,7 @@ let renderContent = (function () {
                 title.innerHTML = "Title: " + element.name;
 
                 let description = document.createElement('p');
-                description.innerHTML = "Description: " + element.description;
+                description.innerHTML = "Description\n:\n" + element.description;
                 console.log(element.description);
 
                 let dueDate = document.createElement('p');
@@ -1093,10 +1102,11 @@ let renderContent = (function () {
         let container = document.getElementById('tasksContainer');
         container.innerHTML = '';
 
-        let p = document.createElement('p');
-        p.innerHTML = `Project ${name} deleted. Select another to make changes or view tasks.`;
+        let div = document.createElement('div');
+        div.classList.add('currentProject');
+        div.innerHTML = `Project ${name} deleted. Select another to make changes or view tasks.`;
 
-        container.appendChild(p);
+        container.appendChild(div);
     }
 
     return {

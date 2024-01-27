@@ -58,7 +58,7 @@ let renderContent = (function () {
                 title.innerHTML = "Title: " + element.name;
 
                 let description = document.createElement('p');
-                description.innerHTML = "Description: " + element.description;
+                description.innerHTML = "Description\n:\n" + element.description;
                 console.log(element.description);
 
                 let dueDate = document.createElement('p');
@@ -108,10 +108,11 @@ let renderContent = (function () {
         let container = document.getElementById('tasksContainer');
         container.innerHTML = '';
 
-        let p = document.createElement('p');
-        p.innerHTML = `Project ${name} deleted. Select another to make changes or view tasks.`;
+        let div = document.createElement('div');
+        div.classList.add('currentProject');
+        div.innerHTML = `Project ${name} deleted. Select another to make changes or view tasks.`;
 
-        container.appendChild(p);
+        container.appendChild(div);
     }
 
     return {
