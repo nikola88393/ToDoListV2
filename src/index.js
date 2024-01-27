@@ -28,13 +28,21 @@ const projectManager = (function () {
     }
 
     const checkLocalStorage = () => {
-        if (loadProjects()) {
+        if (loadProjects() && loadProjects().length !== 0) {
             let obj = loadProjects();
 
             for (const property in obj) {
                 addProject(obj[property]['name'], obj[property]['tasks']);
             }
 
+            renderProjects();
+        }
+
+        else {
+            let project = Project("Default");
+
+            projects.push(project);
+            saveProjects(projects);
             renderProjects();
         }
     }

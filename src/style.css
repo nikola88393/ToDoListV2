@@ -124,6 +124,13 @@ label {
 
 .task button {
     margin-right: 10px;
+    margin-top: 10px;
+}
+
+#tasksList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
 }
 
 .task,
@@ -133,8 +140,23 @@ label {
     color: var(--beige);
     padding: 10px;
     box-shadow: var(--shadow);
+
 }
 
 .project {
     margin-bottom: 8px;
+}
+
+option {
+    color: var(--red);
+
+}
+
+.currentProject,
+.projectList {
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid var(--red);
 }

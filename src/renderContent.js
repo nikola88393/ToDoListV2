@@ -5,6 +5,12 @@ let renderContent = (function () {
         let container = document.getElementById('projectsList');
         container.innerHTML = '';
 
+        let projectList = document.createElement('p');
+        projectList.innerHTML = 'Projects: ';
+        projectList.classList.add('projectList');
+
+        container.appendChild(projectList);
+
         array.forEach(element => {
             let projectContainer = document.createElement('div');
             projectContainer.classList.add('project');
@@ -33,6 +39,12 @@ let renderContent = (function () {
 
         let container = document.getElementById('tasksContainer');
         container.innerHTML = '';
+
+        let currentProject = document.createElement('div');
+        currentProject.innerHTML = 'Current project: ' + project.name;
+        currentProject.classList.add('currentProject');
+
+        container.appendChild(currentProject);
 
         let tasksContainer = document.createElement('ul');
         tasksContainer.id = 'tasksList';
