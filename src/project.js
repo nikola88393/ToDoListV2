@@ -35,6 +35,10 @@ export default function Project(name) {
     function refreshTasks(project = this) {
         renderContent.renderTasks(tasks, project);
     }
+
+    const findTaskByName = (name) => {
+        return tasks.find(element => element.name === name);
+    }
     return {
         name,
         tasks,
@@ -42,6 +46,7 @@ export default function Project(name) {
         setTask,
         getTasks,
         refreshTasks,
-        deleteTask
+        deleteTask,
+        findTaskByName
     }
 }

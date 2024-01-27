@@ -104,6 +104,10 @@ const projectManager = (function () {
         return projects.find(element => element.name === name);
     }
 
+    const findTaskByName = (name, project) => {
+        project.findTaskByName(name);
+    }
+
     return {
         addProject,
         renderProjects,
@@ -113,7 +117,8 @@ const projectManager = (function () {
         checkLocalStorage,
         changeTaskStatus,
         handleAddTask,
-        findProjectByName
+        findProjectByName,
+        findTaskByName
     }
 })();
 
