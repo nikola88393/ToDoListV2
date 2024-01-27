@@ -175,3 +175,29 @@ option {
     color: var(--red);
     justify-self: center;
 }
+
+@media (max-width: 768px) {
+    header {
+        /* padding: 5px 0 5px 0; */
+        padding: 0;
+    }
+
+    .projectTaskContainer {
+        padding: 5px;
+    }
+
+    .projectsContainer {
+        width: 100px;
+    }
+
+    .task,
+    .project {
+        padding: 4px;
+    }
+
+    #tasksList {
+        /* display: grid; */
+        grid-template-columns: 1fr;
+        grid-gap: 5px;
+    }
+}

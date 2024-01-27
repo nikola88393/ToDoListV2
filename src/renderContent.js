@@ -16,13 +16,13 @@ let renderContent = (function () {
             projectContainer.classList.add('project');
 
             let title = document.createElement('p');
-            title.innerHTML = "Title: " + element.name;
+            title.innerHTML = element.name;
             title.addEventListener('click', () => {
                 renderTasks(element.getTasks(), element);
             })
 
             let delBtn = document.createElement('button');
-            delBtn.innerHTML = 'Delete project';
+            delBtn.innerHTML = 'Delete';
             delBtn.addEventListener('click', () => {
                 projectManager.deleteProject(element.name);
             })
